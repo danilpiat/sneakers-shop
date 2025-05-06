@@ -1,0 +1,15 @@
+.catalog {
+  padding-bottom: 2rem;
+}
+
+.controls {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.products {
+  display: grid;
+  gap: 1rem;
+}

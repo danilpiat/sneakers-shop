@@ -1,0 +1,84 @@
+.container {
+  padding: 16px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.searchWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 800px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.searchContainer {
+  width: 100%;
+}
+
+.productsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  flex-grow: 1;
+}
+
+.catalogButton {
+  width: 100%;
+  background: var(--accent);
+  color: white;
+  border: none;
+  padding: 12px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: opacity 0.3s;
+}
+
+.catalogButton:hover {
+  opacity: 0.9;
+}
+
+@media (max-width: 768px) {
+  .productsGrid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .searchWrapper {
+    padding: 0 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .productsGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .catalogButton {
+    font-size: 14px;
+    padding: 10px;
+  }
+}
+
+@media (max-width: 360px) {
+  .productsGrid {
+    grid-template-columns: 1fr;
+  }
+  .breadcrumbs {
+  color: var(--text-primary);
+  padding: 12px 0;
+  font-size: 14px;
+}
+
+.breadcrumbs a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.breadcrumbs span:last-child {
+  color: var(--gray);
+}
+}

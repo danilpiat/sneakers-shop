@@ -1,0 +1,35 @@
+.wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.button {
+  width: 100%;
+  background: var(--bg-secondary);
+  border: none;
+  color: var(--text-primary);
+  padding: 0.75rem;
+  border-radius: var(--border-radius);
+  text-align: left;
+  cursor: pointer;
+}
+
+.options {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: var(--bg-secondary);
+  border-radius: var(--border-radius);
+  margin-top: 0.5rem;
+  z-index: 10;
+}
+
+.option {
+  padding: 0.75rem;
+  cursor: pointer;
+}
+
+.option:hover {
+  background: var(--bg-primary);
+}

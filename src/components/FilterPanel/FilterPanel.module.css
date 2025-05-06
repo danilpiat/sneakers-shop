@@ -1,0 +1,69 @@
+.panel {
+  background: var(--bg-secondary);
+  padding: 1rem;
+  border-radius: var(--border-radius);
+  margin-bottom: 1rem;
+}
+
+.filterGroup {
+  margin-bottom: 1.5rem;
+}
+
+.filterGroup label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+.range {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.range input {
+  flex: 1;
+  background: var(--bg-primary);
+  border: 1px solid var(--gray);
+  color: var(--text-primary);
+  padding: 0.5rem;
+  border-radius: 4px;
+}
+
+.chips {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.chip {
+  background: none;
+  border: 1px solid var(--gray);
+  color: var(--text-primary);
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+}
+
+.chip.active {
+  border-color: var(--accent);
+  background: var(--accent);
+}
+
+.colors {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.color {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  padding: 0;
+  cursor: pointer;
+}
+
+.color:hover {
+  border-color: var(--text-primary);
+}
