@@ -1,48 +1,113 @@
-import { useEffect, useState } from 'react'
-import { useProductStore } from '../../stores/productStore'
-import styles from './FilterPanel.module.css'
+import React, { useState, useEffect } from 'react';
+import styles from './FilterPanel.module.css';
 
-export const FilterPanel = () => {
-  const { filters, setFilters } = useProductStore()
-  const [localFilters, setLocalFilters] = useState(filters)
+interface Filters {
+  brands: string[];
+  sizes: number[];
+  minPrice: number;
+  maxPrice: number;
+}
 
+interface FilterPanelProps {
+  filters: {
+    brands: string[];
+    sizes: number[];
+    minPrice: number;
+    maxPrice: number;
+  };
+  brands: Array<{ id: string; name: string; slug: string }>;
+  onFilterChange: (filters: Filters) => void;
+}
+
+const FilterPanel: React.FC<FilterPanelProps> = ({ 
+  filters, 
+  brands,
+  onFilterChange 
+}) => {
+  const [priceRange, setPriceRange] = useState({
+    min: filters.minPrice,
+    max: filters.maxPrice
+  });
+
+  // Доступные размеры
+  const availableSizes = [36, 37, 38, 39, 40, 41, 42, 43, 44, 45];
+  
+  // Обновление ценового фильтра при изменении ползунка
   useEffect(() => {
-    const timeout = setTimeout(() => setFilters(localFilters), 300)
-    return () => clearTimeout(timeout)
-  }, [localFilters])
+    setPriceRange({
+      min: filters.minPrice,
+      max: filters.maxPrice
+    });
+  }, [filters.minPrice, filters.maxPrice]);
+
+  const handleBrandChange = (brandSlug: string) => {
+    const newBrands = filters.brands.includes(brandSlug)
+      ? filters.brands.filter(b => b !== brandSlug)
+      : [...filters.brands, brandSlug];
+    
+    onFilterChange({ ...filters, brands: newBrands });
+  };
+
+  const handleSizeChange = (size: number) => {
+    const newSizes = filters.sizes.includes(size)
+      ? filters.sizes.filter(s => s !== size)
+      : [...filters.sizes, size];
+    
+    onFilterChange({ ...filters, sizes: newSizes });
+  };
+
+  const handlePriceChange = (min: number, max: number) => {
+    setPriceRange({ min, max });
+    onFilterChange({ ...filters, minPrice: min, maxPrice: max });
+  };
+
+  const resetFilters = () => {
+    onFilterChange({
+      brands: [],
+      sizes: [],
+      minPrice: 0,
+      maxPrice: 10000
+    });
+  };
 
   return (
     <div className={styles.panel}>
+      <div className={styles.panelHeader}>
+        <h2>Фильтры</h2>
+        <button className={styles.resetButton} onClick={resetFilters}>
+          Сбросить
+        </button>
+      </div>
+
+      {/* Секция брендов */}
       <div className={styles.filterGroup}>
-        <label>Price Range:</label>
-        <div className={styles.range}>
-          <input
-            type="number"
-            value={localFilters.minPrice}
-            onChange={e => setLocalFilters({ ...localFilters, minPrice: +e.target.value })}
-          />
-          <span>-</span>
-          <input
-            type="number"
-            value={localFilters.maxPrice}
-            onChange={e => setLocalFilters({ ...localFilters, maxPrice: +e.target.value })}
-          />
+        <h3>Бренды</h3>
+        <div className={styles.filterOptions}>
+          {brands.map(brand => (
+            <label key={brand.id} className={styles.option}>
+              <input
+                type="checkbox"
+                checked={filters.brands.includes(brand.slug)}
+                onChange={() => handleBrandChange(brand.slug)}
+                className={styles.checkbox}
+              />
+              <span className={styles.optionLabel}>{brand.name}</span>
+            </label>
+          ))}
         </div>
       </div>
 
+      {/* Секция размеров */}
       <div className={styles.filterGroup}>
-        <label>Sizes:</label>
-        <div className={styles.chips}>
-          {[39, 40, 41, 42, 43].map(size => (
+        <h3>Размеры</h3>
+        <div className={styles.sizesContainer}>
+          {availableSizes.map(size => (
             <button
               key={size}
-              className={`${styles.chip} ${localFilters.sizes.includes(size) ? styles.active : ''}`}
-              onClick={() => setLocalFilters({
-                ...localFilters,
-                sizes: localFilters.sizes.includes(size)
-                  ? localFilters.sizes.filter(s => s !== size)
-                  : [...localFilters.sizes, size]
-              })}
+              className={`${styles.sizeButton} ${
+                filters.sizes.includes(size) ? styles.selected : ''
+              }`}
+              onClick={() => handleSizeChange(size)}
             >
               {size}
             </button>
@@ -50,24 +115,46 @@ export const FilterPanel = () => {
         </div>
       </div>
 
+      {/* Секция цен */}
       <div className={styles.filterGroup}>
-        <label>Colors:</label>
-        <div className={styles.colors}>
-          {['#2d3748', '#718096', '#4a5568', '#48bb78', '#f6e05e', '#f56565'].map(color => (
-            <button
-              key={color}
-              className={styles.color}
-              style={{ backgroundColor: color }}
-              onClick={() => setLocalFilters({
-                ...localFilters,
-                colors: localFilters.colors.includes(color)
-                  ? localFilters.colors.filter(c => c !== color)
-                  : [...localFilters.colors, color]
-              })}
+        <h3>Ценовой диапазон</h3>
+        <div className={styles.priceRange}>
+          <div className={styles.priceInputs}>
+            <input
+              type="number"
+              min="0"
+              max="10000"
+              value={priceRange.min}
+              onChange={(e) => handlePriceChange(Number(e.target.value), priceRange.max)}
+              className={styles.priceInput}
             />
-          ))}
+            <span>-</span>
+            <input
+              type="number"
+              min="0"
+              max="10000"
+              value={priceRange.max}
+              onChange={(e) => handlePriceChange(priceRange.min, Number(e.target.value))}
+              className={styles.priceInput}
+            />
+          </div>
+          <input
+            type="range"
+            min="0"
+            max="10000"
+            step="100"
+            value={priceRange.max}
+            onChange={(e) => handlePriceChange(priceRange.min, parseInt(e.target.value))}
+            className={styles.priceSlider}
+          />
+          <div className={styles.priceValues}>
+            <span>0 ₽</span>
+            <span>{priceRange.max} ₽</span>
+          </div>
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
+
+export default FilterPanel;

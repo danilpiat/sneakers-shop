@@ -1,60 +1,66 @@
-import { useState } from 'react';
+import React from 'react';
 import styles from './ProductCard.module.css';
-import {Link} from "react-router-dom";
 
-// Обновленный интерфейс продукта
-export interface Product {
-  id: number;
-  title: string;  // Изменили name на title
-  price: number;
-  colors: string[];
-  sizes: number[];
-  image: string;
-  category: string;
-  description: string;
-
+interface ProductCardProps {
+  product: {
+    id: string;
+    title: string;
+    base_price: number;
+    brand: {
+      name: string;
+      logo?: string;
+    };
+    main_image?: {
+      image: string;
+    };
+    available_sizes: number[];
+  };
+  onClick: () => void;
 }
 
-const ProductCard = ({ product }: { product: Product }) => {
-  const [selectedSize, setSelectedSize] = useState<number | null>(null);
-  const [selectedColor, setSelectedColor] = useState<string | null>(null);
-
+const ProductCard: React.FC<ProductCardProps> = ({ product, onClick }) => {
   return (
-    <Link to={`/product/${product.id}`} className={styles.card}>
-      <img src={product.image} alt={product.title} className={styles.image} />
-      <h3 className={styles.title}>{product.title}</h3>  {/* Изменили name на title */}
-      <p className={styles.price}>${product.price}</p>
+      <div className={styles.card} onClick={onClick}>
+          {product.main_image?.image ? (
+              <img
+                  src={product.main_image.image}
+                  alt={product.title}
+                  className={styles.image}
+                  onError={(e) => {
+                      e.currentTarget.src = '/placeholder-image.jpg';
+                  }}
+              />
+          ) : (
+              <div className={styles.imagePlaceholder}>Нет изображения</div>
+          )}
 
-      <div className={styles.selector}>
-        {product.colors.map(color => (
-          <button
-            key={color}
-            className={`${styles.colorDot} ${selectedColor === color ? styles.selected : ''}`}
-            style={{ backgroundColor: color }}
-            onClick={() => setSelectedColor(color)}
-          />
-        ))}
+          <div className={styles.brandContainer}>
+              {product.brand && product.brand.logo ? (
+                  <img
+                      src={product.brand.logo}
+                      alt={product.brand.name}
+                      className={styles.brandLogo}
+                  />
+              ) : (
+                  <span className={styles.brandName}>
+                      {product.brand ? product.brand.name : 'Без бренда'}
+                    </span>
+              )}
+          </div>
+
+          <h3 className={styles.title}>{product.title}</h3>
+
+          <div className={styles.sizesContainer}>
+              {product.available_sizes.slice(0, 5).map(size => (
+                  <span key={size} className={styles.sizeTag}>{size}</span>
+              ))}
+              {product.available_sizes.length > 5 && (
+                  <span className={styles.moreSizes}>+{product.available_sizes.length - 5}</span>
+              )}
+          </div>
+
+          <p className={styles.price}>{product.base_price.toLocaleString()} ₽</p>
       </div>
-
-      <div className={styles.selector}>
-        {product.sizes.map(size => (
-          <button
-            key={size}
-            className={`${styles.sizeBtn} ${selectedSize === size ? styles.selected : ''}`}
-            onClick={() => setSelectedSize(size)}
-          >
-            {size}
-          </button>
-        ))}
-      </div>
-
-      <button
-        className={styles.addToCart}
-        disabled={!selectedSize || !selectedColor}
-      >
-        Add to Cart
-      </button>
-    </Link>
   );
 };
 

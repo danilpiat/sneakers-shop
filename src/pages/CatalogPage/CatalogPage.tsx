@@ -1,95 +1,193 @@
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import ProductCard from '../../components/ProductCard/ProductCard';
 import Pagination from '../../components/Pagination/Pagination';
-import SearchInput from '../../components/SearchInput/SearchInput';
+import SortSelect from '../../components/SortSelect/SortSelect';
+import FilterPanel from '../../components/FilterPanel/FilterPanel';
 import styles from './CatalogPage.module.css';
 
-// Интерфейс для товара
-interface Product {
-  id: number;
-  title: string;
-  price: number;
-  image: string;
-  sizes: number[];
-  colors: string[];
-  category: string;
-  description: string;
+// Интерфейсы для типизации
+export interface Brand {
+  id: string;
+  name: string;
+  slug: string;
+  logo?: string;
+}
 
+export interface Product {
+  id: string;
+  title: string;
+  slug: string;
+  base_price: number;
+  description: string;
+  brand: Brand;
+  main_image?: {
+    image: string;
+    is_main: boolean;
+  };
+  available_sizes: number[];
+}
+
+interface Filters {
+  brands: string[];
+  sizes: number[];
+  minPrice: number;
+  maxPrice: number;
 }
 
 const CatalogPage = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const [products, setProducts] = useState<Product[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [searchQuery, setSearchQuery] = useState('');
+  const [totalItems, setTotalItems] = useState(0);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [brands, setBrands] = useState<Brand[]>([]);
+  const [sortBy, setSortBy] = useState('default');
+  const [filters, setFilters] = useState({
+    brands: [] as string[],
+    sizes: [] as number[],
+    minPrice: 0,
+    maxPrice: 10000,
+  });
+
   const pageSize = 30;
 
-  // Моковые данные товаров
-  const [products] = useState<Product[]>(
-    Array.from({ length: 90 }, (_, i) => ({
-      id: i + 1,
-      title: `Кроссовки ${i + 1}`,
-      price: Math.floor(Math.random() * 1000) + 1000,
-      image: 'https://via.placeholder.com/200x200',
-      sizes: [39, 40, 41, 42, 43],
-      colors: ['#000000', '#FFFFFF', '#FF0000'],
-      category: 'sneakers', // Добавили категорию
-      description: 'Описание1' // Добавили категорию
-    }))
-  );
+  // Получение брендов
+  const fetchBrands = async () => {
+    try {
+      const response = await fetch('http://127.0.0.1:8000/api/brands/');
+      if (!response.ok) throw new Error('Ошибка загрузки брендов');
+      const data = await response.json();
+      setBrands(data);
+    } catch (err) {
+      console.error('Ошибка загрузки брендов:', err);
+    }
+  };
 
-  // Фильтрация и пагинация
-  const filteredProducts = products.filter(product =>
-    product.title.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  // Получение товаров
+  const fetchProducts = async () => {
+    setLoading(true);
+    setError(null);
 
-  const paginatedProducts = filteredProducts.slice(
-    (currentPage - 1) * pageSize,
-    currentPage * pageSize
-  );
+    try {
+      // Формируем параметры запроса
+      const params = new URLSearchParams();
+      params.append('page', currentPage.toString());
+      params.append('page_size', pageSize.toString());
 
-  // Сброс пагинации при изменении поискового запроса
+      // Добавляем параметры сортировки
+      if (sortBy !== 'default') {
+        if (sortBy === 'price_asc') params.append('ordering', 'base_price');
+        if (sortBy === 'price_desc') params.append('ordering', '-base_price');
+        if (sortBy === 'name') params.append('ordering', 'title');
+      }
+
+      // Добавляем фильтры
+      if (filters.brands.length > 0) {
+        filters.brands.forEach(brand => params.append('brand', brand));
+      }
+      if (filters.sizes.length > 0) {
+        filters.sizes.forEach(size => params.append('size', size.toString()));
+      }
+      params.append('min_price', filters.minPrice.toString());
+      params.append('max_price', filters.maxPrice.toString());
+
+      // Добавляем категорию из URL, если есть
+      // const categorySlug = new URLSearchParams(location.search).get('category');
+      // if (categorySlug) {
+      //   params.append('category', categorySlug);
+      // }
+
+      const response = await fetch(`http://127.0.0.1:8000/api/products/?${params.toString()}`);
+
+      if (!response.ok) {
+        throw new Error('Ошибка загрузки товаров');
+      }
+
+      const data = await response.json();
+      setProducts(data);
+      setTotalItems(data.length);
+    } catch (err) {
+      setError('Не удалось загрузить товары. Попробуйте позже.');
+      console.error('Ошибка загрузки товаров:', err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Загрузка данных при монтировании и изменении параметров
   useEffect(() => {
+    fetchBrands();
+  }, []);
+
+  useEffect(() => {
+    fetchProducts();
+  }, [currentPage, sortBy, filters, location.search]);
+
+  // Обработчики
+  const handleSortChange = (newSort: string) => {
+    setSortBy(newSort);
     setCurrentPage(1);
-  }, [searchQuery]);
+  };
+
+  const handleFilterChange = (newFilters: Filters) => {
+  setFilters(newFilters);
+  setCurrentPage(1);
+};
 
   return (
-  <div className={styles.container}>
-    {/* Поисковая строка */}
-    <div className={styles.searchWrapper}>
-      <div className={styles.searchContainer}>
-        <SearchInput
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e)}
-          placeholder="Поиск по каталогу..."
+    <div className={styles.container}>
+      <h1 className={styles.title}>Каталог кроссовок</h1>
+
+      {/* Фильтры и сортировка */}
+      <div className={styles.controls}>
+        <FilterPanel
+          filters={filters}
+          brands={brands}
+          onFilterChange={handleFilterChange}
+        />
+        <SortSelect
+          currentSort={sortBy}
+          onSortChange={handleSortChange}
         />
       </div>
 
-      {/* Кнопка категорий */}
-      <button
-        className={styles.catalogButton}
-        onClick={() => navigate('/catalog/')}
-      >
-        Категории
-      </button>
-    </div>
+      {/* Загрузка и ошибки */}
+      {loading && <div className={styles.loading}>Загрузка товаров...</div>}
+      {error && <div className={styles.error}>{error}</div>}
 
-    {/* Сетка товаров */}
-    <div className={styles.productsGrid}>
-      {paginatedProducts.map(product => (
-        <ProductCard key={product.id} product={product} />
-      ))}
-    </div>
+      {/* Сетка товаров */}
+      {!loading && !error && (
+        <>
+          {products.length === 0 ? (
+            <div className={styles.noResults}>Товары не найдены</div>
+          ) : (
+            <>
+              <div className={styles.productsGrid}>
+                {products.map(product => (
+                  <ProductCard
+                    key={product.id}
+                    product={product}
+                    onClick={() => navigate(`/product/${product.slug}`)}
+                  />
+                ))}
+              </div>
 
-    {/* Пагинация */}
-    <Pagination
-      currentPage={currentPage}
-      totalItems={filteredProducts.length}
-      pageSize={pageSize}
-      onPageChange={setCurrentPage}
-    />
-  </div>
-);
+              {/* Пагинация */}
+              <Pagination
+                currentPage={currentPage}
+                totalItems={totalItems}
+                pageSize={pageSize}
+                onPageChange={setCurrentPage}
+              />
+            </>
+          )}
+        </>
+      )}
+    </div>
+  );
 };
 
 export default CatalogPage;

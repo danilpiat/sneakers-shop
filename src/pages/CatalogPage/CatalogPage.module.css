@@ -1,84 +1,81 @@
 .container {
-  padding: 16px;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-.searchWrapper {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  max-width: 800px;
+  padding: 20px;
+  max-width: 1200px;
   margin: 0 auto;
-  width: 100%;
+  background-color: rgba(15, 23, 42, 0.85);
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
 }
 
-.searchContainer {
-  width: 100%;
+.title {
+  text-align: center;
+  color: #f8fafc;
+  margin-bottom: 30px;
+  font-size: 28px;
+  position: relative;
+  padding-bottom: 15px;
+}
+
+.title::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100px;
+  height: 3px;
+  background: #818cf8;
+  border-radius: 3px;
+}
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-bottom: 30px;
 }
 
 .productsGrid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
-  flex-grow: 1;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 25px;
+  margin-bottom: 40px;
 }
 
-.catalogButton {
-  width: 100%;
-  background: var(--accent);
-  color: white;
-  border: none;
-  padding: 12px;
-  font-size: 16px;
-  cursor: pointer;
-  border-radius: 8px;
-  transition: opacity 0.3s;
+.loading {
+  text-align: center;
+  padding: 40px;
+  color: #818cf8;
+  font-size: 18px;
 }
 
-.catalogButton:hover {
-  opacity: 0.9;
+.error {
+  text-align: center;
+  padding: 40px;
+  color: #f56565;
+  font-size: 18px;
+}
+
+.noResults {
+  text-align: center;
+  padding: 40px;
+  color: #94a3b8;
+  font-size: 18px;
+  grid-column: 1 / -1;
 }
 
 @media (max-width: 768px) {
-  .productsGrid {
-    grid-template-columns: repeat(3, 1fr);
+  .controls {
+    flex-direction: column;
   }
 
-  .searchWrapper {
-    padding: 0 10px;
+  .productsGrid {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   }
 }
 
 @media (max-width: 480px) {
   .productsGrid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .catalogButton {
-    font-size: 14px;
-    padding: 10px;
-  }
-}
-
-@media (max-width: 360px) {
-  .productsGrid {
     grid-template-columns: 1fr;
   }
-  .breadcrumbs {
-  color: var(--text-primary);
-  padding: 12px 0;
-  font-size: 14px;
-}
-
-.breadcrumbs a {
-  color: var(--accent);
-  text-decoration: none;
-}
-
-.breadcrumbs span:last-child {
-  color: var(--gray);
-}
 }

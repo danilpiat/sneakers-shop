@@ -1,26 +1,35 @@
-import { useProductStore } from '../../stores/productStore'
-import { Listbox } from '@headlessui/react'
-import styles from './SortSelect.module.css'
+import React from 'react';
+import styles from './SortSelect.module.css';
 
-export const SortSelect = () => {
-  const { sortBy, setSort } = useProductStore()
+interface SortSelectProps {
+  currentSort: string;
+  onSortChange: (sort: string) => void;
+}
+
+const SortSelect: React.FC<SortSelectProps> = ({ currentSort, onSortChange }) => {
+  const options = [
+    { value: 'default', label: 'По умолчанию' },
+    { value: 'price_asc', label: 'Цена по возрастанию' },
+    { value: 'price_desc', label: 'Цена по убыванию' },
+    { value: 'name', label: 'По названию' },
+  ];
 
   return (
-    <Listbox value={sortBy} onChange={setSort}>
-      <div className={styles.wrapper}>
-        <Listbox.Button className={styles.button}>
-          Sort by: {sortBy}
-        </Listbox.Button>
+    <div className={styles.wrapper}>
+      <label className={styles.label}>Сортировка:</label>
+      <select
+        value={currentSort}
+        onChange={(e) => onSortChange(e.target.value)}
+        className={styles.select}
+      >
+        {options.map(option => (
+          <option key={option.value} value={option.value}>
+            {option.label}
+          </option>
+        ))}
+      </select>
+    </div>
+  );
+};
 
-        <Listbox.Options className={styles.options}>
-          <Listbox.Option value="price" className={styles.option}>
-            Price
-          </Listbox.Option>
-          <Listbox.Option value="name" className={styles.option}>
-            Name
-          </Listbox.Option>
-        </Listbox.Options>
-      </div>
-    </Listbox>
-  )
-}
+export default SortSelect;

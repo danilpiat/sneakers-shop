@@ -1,3 +1,4 @@
+import React from 'react';
 import styles from './Pagination.module.css';
 
 interface PaginationProps {
@@ -7,8 +8,15 @@ interface PaginationProps {
   onPageChange: (page: number) => void;
 }
 
-const Pagination = ({ currentPage, totalItems, pageSize, onPageChange }: PaginationProps) => {
+const Pagination: React.FC<PaginationProps> = ({
+  currentPage,
+  totalItems,
+  pageSize,
+  onPageChange
+}) => {
   const totalPages = Math.ceil(totalItems / pageSize);
+
+  if (totalPages <= 1) return null;
 
   return (
     <div className={styles.pagination}>
@@ -20,9 +28,29 @@ const Pagination = ({ currentPage, totalItems, pageSize, onPageChange }: Paginat
         Назад
       </button>
 
-      <span className={styles.pageInfo}>
-        Страница {currentPage} из {totalPages}
-      </span>
+      {Array.from({ length: totalPages }, (_, i) => i + 1)
+        .filter(page => {
+          if (totalPages <= 7) return true;
+          return (
+            page === 1 ||
+            page === totalPages ||
+            (page >= currentPage - 2 && page <= currentPage + 2)
+          );
+        })
+        .map((page, index, array) => (
+          <React.Fragment key={page}>
+            {index > 0 && page - array[index - 1] > 1 && (
+              <span className={styles.pageDots}>...</span>
+            )}
+            <button
+              className={`${styles.pageButton} ${currentPage === page ? styles.active : ''}`}
+              onClick={() => onPageChange(page)}
+            >
+              {page}
+            </button>
+          </React.Fragment>
+        ))
+      }
 
       <button
         className={styles.pageButton}
