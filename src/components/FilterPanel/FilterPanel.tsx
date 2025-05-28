@@ -66,7 +66,7 @@ const FilterPanel: React.FC<FilterPanelProps> = ({
       brands: [],
       sizes: [],
       minPrice: 0,
-      maxPrice: 10000
+      maxPrice: 100000
     });
   };
 
@@ -123,7 +123,7 @@ const FilterPanel: React.FC<FilterPanelProps> = ({
             <input
               type="number"
               min="0"
-              max="10000"
+              max="100000"
               value={priceRange.min}
               onChange={(e) => handlePriceChange(Number(e.target.value), priceRange.max)}
               className={styles.priceInput}
@@ -132,7 +132,7 @@ const FilterPanel: React.FC<FilterPanelProps> = ({
             <input
               type="number"
               min="0"
-              max="10000"
+              max="100000"
               value={priceRange.max}
               onChange={(e) => handlePriceChange(priceRange.min, Number(e.target.value))}
               className={styles.priceInput}
@@ -141,7 +141,7 @@ const FilterPanel: React.FC<FilterPanelProps> = ({
           <input
             type="range"
             min="0"
-            max="10000"
+            max="100000"
             step="100"
             value={priceRange.max}
             onChange={(e) => handlePriceChange(priceRange.min, parseInt(e.target.value))}

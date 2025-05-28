@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef  } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import ProductCard from '../../components/ProductCard/ProductCard';
 import Pagination from '../../components/Pagination/Pagination';
@@ -6,7 +6,6 @@ import SortSelect from '../../components/SortSelect/SortSelect';
 import FilterPanel from '../../components/FilterPanel/FilterPanel';
 import styles from './CatalogPage.module.css';
 
-// Интерфейсы для типизации
 export interface Brand {
   id: string;
   name: string;
@@ -49,12 +48,16 @@ const CatalogPage = () => {
     brands: [] as string[],
     sizes: [] as number[],
     minPrice: 0,
-    maxPrice: 10000,
+    maxPrice: 100000,
   });
+
+
+  const abortControllerRef = useRef<AbortController | null>(null);
 
   const pageSize = 30;
 
-  // Получение брендов
+  const categoryParam = new URLSearchParams(location.search).get('category');
+
   const fetchBrands = async () => {
     try {
       const response = await fetch('http://127.0.0.1:8000/api/brands/');
@@ -66,25 +69,34 @@ const CatalogPage = () => {
     }
   };
 
-  // Получение товаров
-  const fetchProducts = async () => {
+   const fetchProducts = async () => {
+    // Отменяем предыдущий запрос
+    if (abortControllerRef.current) {
+      abortControllerRef.current.abort();
+    }
+
+    const controller = new AbortController();
+    abortControllerRef.current = controller;
+
     setLoading(true);
     setError(null);
 
     try {
-      // Формируем параметры запроса
       const params = new URLSearchParams();
       params.append('page', currentPage.toString());
       params.append('page_size', pageSize.toString());
 
-      // Добавляем параметры сортировки
+      // Добавляем категорию, если она есть
+      if (categoryParam) {
+        params.append('category', categoryParam);
+      }
+
       if (sortBy !== 'default') {
         if (sortBy === 'price_asc') params.append('ordering', 'base_price');
         if (sortBy === 'price_desc') params.append('ordering', '-base_price');
         if (sortBy === 'name') params.append('ordering', 'title');
       }
 
-      // Добавляем фильтры
       if (filters.brands.length > 0) {
         filters.brands.forEach(brand => params.append('brand', brand));
       }
@@ -94,13 +106,10 @@ const CatalogPage = () => {
       params.append('min_price', filters.minPrice.toString());
       params.append('max_price', filters.maxPrice.toString());
 
-      // Добавляем категорию из URL, если есть
-      // const categorySlug = new URLSearchParams(location.search).get('category');
-      // if (categorySlug) {
-      //   params.append('category', categorySlug);
-      // }
-
-      const response = await fetch(`http://127.0.0.1:8000/api/products/?${params.toString()}`);
+      const response = await fetch(
+        `http://127.0.0.1:8000/api/products/?${params.toString()}`,
+        { signal: controller.signal }
+      );
 
       if (!response.ok) {
         throw new Error('Ошибка загрузки товаров');
@@ -110,23 +119,41 @@ const CatalogPage = () => {
       setProducts(data);
       setTotalItems(data.length);
     } catch (err) {
+      // Игнорируем ошибки отмены запроса
       setError('Не удалось загрузить товары. Попробуйте позже.');
       console.error('Ошибка загрузки товаров:', err);
     } finally {
-      setLoading(false);
+      // Сбрасываем контроллер только если это текущий запрос
+      if (abortControllerRef.current === controller) {
+        abortControllerRef.current = null;
+        setLoading(false);
+      }
     }
   };
 
-  // Загрузка данных при монтировании и изменении параметров
   useEffect(() => {
     fetchBrands();
   }, []);
 
-  useEffect(() => {
-    fetchProducts();
-  }, [currentPage, sortBy, filters, location.search]);
+   useEffect(() => {
+    // Сбрасываем страницу при изменении категории
+    setCurrentPage(1);
+  }, [categoryParam]);
 
-  // Обработчики
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      fetchProducts();
+    }, 100);
+
+    return () => {
+      clearTimeout(timer);
+      // Отменяем запрос при размонтировании
+      if (abortControllerRef.current) {
+        abortControllerRef.current.abort();
+      }
+    };
+  }, [currentPage, sortBy, filters, categoryParam]);
+
   const handleSortChange = (newSort: string) => {
     setSortBy(newSort);
     setCurrentPage(1);
@@ -139,9 +166,10 @@ const CatalogPage = () => {
 
   return (
     <div className={styles.container}>
-      <h1 className={styles.title}>Каталог кроссовок</h1>
+      <h1 className={styles.title}>
+        {categoryParam ? `Категория: ${categoryParam}` : 'Каталог кроссовок'}
+      </h1>
 
-      {/* Фильтры и сортировка */}
       <div className={styles.controls}>
         <FilterPanel
           filters={filters}
