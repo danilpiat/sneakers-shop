@@ -1,13 +1,33 @@
-import { Link } from 'react-router-dom';
+import {Link, useLocation, useNavigate} from 'react-router-dom';
 import styles from './Header.module.css';
 
 const Header = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const handleCatalogClick = (e: React.MouseEvent) => {
+    e.preventDefault(); // отменяем переход по ссылке по умолчанию
+
+    if (location.pathname === '/catalog/categories') {
+      // Уже на странице каталога — возвращаемся назад
+      navigate(-1);
+    } else {
+      // Идём на страницу каталога
+      navigate('/catalog/categories');
+    }
+  };
+
   return (
     <header className={styles.header}>
       <div className={styles.leftSection}>
-        <Link to="/catalog/categories" className={styles.burgerButton}>
+        {/* Заменили Link на span с onClick */}
+        <a
+          href="/catalog/categories"
+          className={styles.burgerButton}
+          onClick={handleCatalogClick}
+        >
           <span>☰</span> Каталог
-        </Link>
+        </a>
       </div>
 
       <div className={styles.centerSection}>
