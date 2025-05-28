@@ -23,11 +23,11 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onClick }) => {
       <div className={styles.card} onClick={onClick}>
           {product.main_image?.image ? (
               <img
-                  src={product.main_image.image}
+                  src={`data:image/jpeg;base64,${product.main_image?.image}`}
                   alt={product.title}
                   className={styles.image}
                   onError={(e) => {
-                      e.currentTarget.src = '/placeholder-image.jpg';
+                    e.currentTarget.src = '/placeholder-image.jpg';
                   }}
               />
           ) : (

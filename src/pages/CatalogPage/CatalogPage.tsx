@@ -170,7 +170,7 @@ const CatalogPage = () => {
                   <ProductCard
                     key={product.id}
                     product={product}
-                    onClick={() => navigate(`/product/${product.slug}`)}
+                    onClick={() => navigate(`/product/${product.id}`)}
                   />
                 ))}
               </div>
