@@ -21,7 +21,7 @@ const CatalogCategoriesPage = () => {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const response = await fetch('http://127.0.0.1:8000/api/categories/');
+        const response = await fetch('${process.env.REACT_APP_API_BASE_URL}/categories/');
         if (!response.ok) throw new Error('Ошибка загрузки категорий');
         const data = await response.json();
         setCategories(data);
