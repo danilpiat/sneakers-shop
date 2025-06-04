@@ -60,7 +60,7 @@ const CatalogPage = () => {
 
   const fetchBrands = async () => {
     try {
-      const response = await fetch('${process.env.REACT_APP_API_BASE_URL}/brands/');
+      const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/brands/`);
       if (!response.ok) throw new Error('Ошибка загрузки брендов');
       const data = await response.json();
       setBrands(data);
@@ -107,7 +107,7 @@ const CatalogPage = () => {
       params.append('max_price', filters.maxPrice.toString());
 
       const response = await fetch(
-        `${process.env.REACT_APP_API_BASE_URL}/api/products/?${params.toString()}`,
+        `${process.env.REACT_APP_API_BASE_URL}/products/?${params.toString()}`,
         { signal: controller.signal }
       );
 
