@@ -9,10 +9,7 @@ interface Category {
   level: number;
   parent_id: string | null;
   is_active: boolean;
-}
-
-interface CategoryNode extends Category {
-  children: CategoryNode[];
+  image: string | null;
 }
 
 const CatalogCategoriesPage = () => {
@@ -38,66 +35,23 @@ const CatalogCategoriesPage = () => {
     fetchCategories();
   }, []);
 
-  const buildCategoryTree = (categories: Category[]): CategoryNode[] => {
-    const map = new Map<string, CategoryNode>();
-    const tree: CategoryNode[] = [];
-    categories.forEach(category => {
-      map.set(category.id, { ...category, children: [] });
-    });
-    categories.forEach(category => {
-      const node = map.get(category.id);
-      if (node) {
-        if (category.parent_id) {
-          const parent = map.get(category.parent_id);
-          if (parent) parent.children.push(node);
-        } else {
-          tree.push(node);
-        }
-      }
-    });
-    return tree;
-  };
+  // Группируем категории по родителям
+  const groupedCategories: Record<string, Category[]> = {};
+  const rootCategories: Category[] = [];
 
-  const categoryTree = buildCategoryTree(categories);
+  categories.forEach(category => {
+    if (category.level === 0) {
+      rootCategories.push(category);
+    } else if (category.parent_id) {
+      if (!groupedCategories[category.parent_id]) {
+        groupedCategories[category.parent_id] = [];
+      }
+      groupedCategories[category.parent_id].push(category);
+    }
+  });
 
   const handleCategoryClick = (categorySlug: string) => {
     navigate(`/catalog?category=${categorySlug}`);
-  };
-
-  const renderCategoryTree = (categories: CategoryNode[], level = 0) => {
-    return categories.map(category => (
-      <div key={category.id} className={styles.categoryTreeItem}>
-        <div className={styles.categoryCard}>
-          <div
-            className={styles.categoryContent}
-            onClick={() => handleCategoryClick(category.slug)}
-          >
-            <div className={styles.categoryPlaceholder}>
-              {category.name.charAt(0)}
-            </div>
-            <h3 className={styles.categoryName}>{category.name}</h3>
-          </div>
-
-          {category.children.length > 0 && (
-            <button
-              className={styles.showAllButton}
-              onClick={() => handleCategoryClick(category.slug)}
-            >
-              Показать все
-            </button>
-          )}
-        </div>
-
-        {category.children.length > 0 && (
-          <div
-            className={styles.childrenContainer}
-            style={{ marginLeft: `${level * 20}px` }}
-          >
-            {renderCategoryTree(category.children, level + 1)}
-          </div>
-        )}
-      </div>
-    ));
   };
 
   return (
@@ -106,9 +60,70 @@ const CatalogCategoriesPage = () => {
         <h1 className={styles.title}>Категории обуви</h1>
         {loading && <div className={styles.loading}>Загрузка категорий...</div>}
         {error && <div className={styles.error}>{error}</div>}
+
         {!loading && !error && (
-          <div className={styles.categoryTree}>
-            {renderCategoryTree(categoryTree)}
+          <div className={styles.categoriesContainer}>
+            {rootCategories.map(rootCategory => (
+              <div key={rootCategory.id} className={styles.rootCategory}>
+                <div className={styles.rootCategoryHeader}>
+                  <h2
+                    className={styles.rootCategoryTitle}
+                    onClick={() => handleCategoryClick(rootCategory.slug)}
+                  >
+                    {rootCategory.name}
+                  </h2>
+                  <button
+                    className={styles.showAllButton}
+                    onClick={() => handleCategoryClick(rootCategory.slug)}
+                  >
+                    Показать все
+                  </button>
+                </div>
+
+                {groupedCategories[rootCategory.id] && (
+                  <div className={styles.mosaicContainer}>
+                    <div className={styles.mosaicGrid}>
+                      {groupedCategories[rootCategory.id]
+                        .slice(0, 8) // Ограничиваем двумя рядами (4x2)
+                        .map(category => (
+                          <div
+                            key={category.id}
+                            className={styles.categoryCard}
+                            onClick={() => handleCategoryClick(category.slug)}
+                          >
+                            {category.image ? (
+                              <img
+                                src={`data:image/jpeg;base64,${category.image}`}
+                                alt={category.name}
+                                className={styles.categoryImage}
+                                onError={(e) => {
+                                  e.currentTarget.src = '/placeholder-image.jpg';
+                                }}
+                              />
+                            ) : (
+                              <div className={styles.categoryPlaceholder}>
+                                {category.name.charAt(0)}
+                              </div>
+                            )}
+                            <h3 className={styles.categoryName}>{category.name}</h3>
+                          </div>
+                        ))
+                      }
+                    </div>
+
+                    {/* Кнопка "Показать все" для дочерних категорий */}
+                    {groupedCategories[rootCategory.id].length > 8 && (
+                      <button
+                        className={styles.showAllChildButton}
+                        onClick={() => handleCategoryClick(rootCategory.slug)}
+                      >
+                        Показать все
+                      </button>
+                    )}
+                  </div>
+                )}
+              </div>
+            ))}
           </div>
         )}
       </div>
