@@ -92,8 +92,16 @@
 }
 
 .price {
-  color: #818cf8;
-  font-weight: bold;
   font-size: 18px;
-  margin: 0;
+  font-weight: bold;
+  color: #000;
+  margin-top: 10px;
+  text-align: center;
+}
+
+/* Добавляем адаптивность для диапазона цен */
+@media (max-width: 480px) {
+  .price {
+    font-size: 16px;
+  }
 }

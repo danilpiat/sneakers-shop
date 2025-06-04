@@ -282,3 +282,22 @@
     padding-bottom: 150px; /* Больший отступ для мобильных */
   }
 }
+
+  .sizeButton {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 5px;
+  }
+
+  .sizePrice {
+    font-size: 12px;
+    margin-top: 5px;
+    color: #666;
+  }
+
+  .sizeButton.selected .sizePrice {
+    color: white;
+    font-weight: bold;
+  }

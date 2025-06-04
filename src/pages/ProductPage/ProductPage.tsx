@@ -2,26 +2,29 @@ import { useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import styles from './ProductPage.module.css';
 
+interface SizeItem {
+  size: string;
+  stock: number;
+  price: number; // Добавляем цену для каждого размера
+}
+
 interface ProductModel {
   id: string;
   color: string;
   sku: string;
-  price: string;
-  sizes: {
-    size: string;
-    stock: number;
-  }[];
+  sizes: SizeItem[]; // Используем обновленный интерфейс
   images: {
     image: string;
     is_main: boolean;
     order_index: number;
   }[];
+  min_price: number; // Добавляем минимальную цену
+  max_price: number; // Добавляем максимальную цену
 }
 
 interface ProductDetail {
   id: string;
   title: string;
-  base_price: number;
   brand: {
     name: string;
     logo?: string;
@@ -29,7 +32,6 @@ interface ProductDetail {
   main_image?: {
     image: string;
   };
-  available_sizes: number[];
   description: string;
   models: ProductModel[];
 }
@@ -40,7 +42,7 @@ const ProductPage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [selectedModel, setSelectedModel] = useState<ProductModel | null>(null);
-  const [selectedSize, setSelectedSize] = useState<string | null>(null);
+  const [selectedSize, setSelectedSize] = useState<SizeItem | null>(null); // Теперь храним весь объект размера
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   // Загрузка товара
@@ -166,12 +168,13 @@ const ProductPage = () => {
               <button
                 key={sizeItem.size}
                 className={`${styles.sizeButton} ${
-                  selectedSize === sizeItem.size ? styles.selected : ''
+                  selectedSize?.size === sizeItem.size ? styles.selected : ''
                 } ${sizeItem.stock <= 0 ? styles.outOfStock : ''}`}
-                onClick={() => setSelectedSize(sizeItem.size)}
+                onClick={() => setSelectedSize(sizeItem)}
                 disabled={sizeItem.stock <= 0}
               >
-                {sizeItem.size}
+                <div>{sizeItem.size}</div>
+                <div className={styles.sizePrice}>{sizeItem.price.toLocaleString()} ₽</div>
                 {sizeItem.stock <= 0 && <span className={styles.stockLabel}>Нет в наличии</span>}
               </button>
             ))}
@@ -185,19 +188,21 @@ const ProductPage = () => {
         <p className={styles.description}>{product.description}</p>
       </div>
 
-      {/* Нижняя панель с ценой и кнопкой */}
+      {/* Нижняя панель с ценой выбранного размера */}
       <div className={styles.bottomPanel}>
         <div className={styles.priceContainer}>
           <span className={styles.priceLabel}>Цена:</span>
           <span className={styles.priceValue}>
-            {selectedModel
-              ? `${parseFloat(selectedModel.price).toLocaleString()} ₽`
-              : 'Цена не указана'}
+            {selectedSize
+              ? `${selectedSize.price.toLocaleString()} ₽`
+              : selectedModel
+                ? `от ${selectedModel.min_price.toLocaleString()} ₽`
+                : 'Цена не указана'}
           </span>
         </div>
         <button
           className={styles.addToCart}
-          disabled={!selectedSize || !selectedModel}
+          disabled={!selectedSize}
         >
           Добавить в корзину
         </button>
