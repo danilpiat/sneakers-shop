@@ -24,7 +24,7 @@ export interface Product {
     image: string;
     is_main: boolean;
   };
-  available_sizes: number[];
+  // Убрали available_sizes, так как размеры больше не отображаются
 }
 
 interface Filters {

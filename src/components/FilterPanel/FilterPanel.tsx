@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import styles from './FilterPanel.module.css';
 
 interface Filters {
@@ -24,21 +24,9 @@ const FilterPanel: React.FC<FilterPanelProps> = ({
   brands,
   onFilterChange 
 }) => {
-  const [priceRange, setPriceRange] = useState({
-    min: filters.minPrice,
-    max: filters.maxPrice
-  });
 
   // Доступные размеры
   const availableSizes = [36, 37, 38, 39, 40, 41, 42, 43, 44, 45];
-  
-  // Обновление ценового фильтра при изменении ползунка
-  useEffect(() => {
-    setPriceRange({
-      min: filters.minPrice,
-      max: filters.maxPrice
-    });
-  }, [filters.minPrice, filters.maxPrice]);
 
   const handleBrandChange = (brandSlug: string) => {
     const newBrands = filters.brands.includes(brandSlug)
@@ -56,10 +44,6 @@ const FilterPanel: React.FC<FilterPanelProps> = ({
     onFilterChange({ ...filters, sizes: newSizes });
   };
 
-  const handlePriceChange = (min: number, max: number) => {
-    setPriceRange({ min, max });
-    onFilterChange({ ...filters, minPrice: min, maxPrice: max });
-  };
 
   const resetFilters = () => {
     onFilterChange({
@@ -112,45 +96,6 @@ const FilterPanel: React.FC<FilterPanelProps> = ({
               {size}
             </button>
           ))}
-        </div>
-      </div>
-
-      {/* Секция цен */}
-      <div className={styles.filterGroup}>
-        <h3>Ценовой диапазон</h3>
-        <div className={styles.priceRange}>
-          <div className={styles.priceInputs}>
-            <input
-              type="number"
-              min="0"
-              max="100000"
-              value={priceRange.min}
-              onChange={(e) => handlePriceChange(Number(e.target.value), priceRange.max)}
-              className={styles.priceInput}
-            />
-            <span>-</span>
-            <input
-              type="number"
-              min="0"
-              max="100000"
-              value={priceRange.max}
-              onChange={(e) => handlePriceChange(priceRange.min, Number(e.target.value))}
-              className={styles.priceInput}
-            />
-          </div>
-          <input
-            type="range"
-            min="0"
-            max="100000"
-            step="100"
-            value={priceRange.max}
-            onChange={(e) => handlePriceChange(priceRange.min, parseInt(e.target.value))}
-            className={styles.priceSlider}
-          />
-          <div className={styles.priceValues}>
-            <span>0 ₽</span>
-            <span>{priceRange.max} ₽</span>
-          </div>
         </div>
       </div>
     </div>
