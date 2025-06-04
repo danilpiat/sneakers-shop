@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styles from './FilterPanel.module.css';
 
 interface Filters {
@@ -19,11 +19,13 @@ interface FilterPanelProps {
   onFilterChange: (filters: Filters) => void;
 }
 
-const FilterPanel: React.FC<FilterPanelProps> = ({ 
-  filters, 
+const FilterPanel: React.FC<FilterPanelProps> = ({
+  filters,
   brands,
-  onFilterChange 
+  onFilterChange
 }) => {
+  const [brandsOpen, setBrandsOpen] = useState(false);
+  const [sizesOpen, setSizesOpen] = useState(false);
 
   // Доступные размеры
   const availableSizes = [36, 37, 38, 39, 40, 41, 42, 43, 44, 45];
@@ -32,7 +34,7 @@ const FilterPanel: React.FC<FilterPanelProps> = ({
     const newBrands = filters.brands.includes(brandSlug)
       ? filters.brands.filter(b => b !== brandSlug)
       : [...filters.brands, brandSlug];
-    
+
     onFilterChange({ ...filters, brands: newBrands });
   };
 
@@ -40,10 +42,9 @@ const FilterPanel: React.FC<FilterPanelProps> = ({
     const newSizes = filters.sizes.includes(size)
       ? filters.sizes.filter(s => s !== size)
       : [...filters.sizes, size];
-    
+
     onFilterChange({ ...filters, sizes: newSizes });
   };
-
 
   const resetFilters = () => {
     onFilterChange({
@@ -63,40 +64,60 @@ const FilterPanel: React.FC<FilterPanelProps> = ({
         </button>
       </div>
 
-      {/* Секция брендов */}
+      {/* Секция брендов с выпадающим списком */}
       <div className={styles.filterGroup}>
-        <h3>Бренды</h3>
-        <div className={styles.filterOptions}>
-          {brands.map(brand => (
-            <label key={brand.id} className={styles.option}>
-              <input
-                type="checkbox"
-                checked={filters.brands.includes(brand.slug)}
-                onChange={() => handleBrandChange(brand.slug)}
-                className={styles.checkbox}
-              />
-              <span className={styles.optionLabel}>{brand.name}</span>
-            </label>
-          ))}
+        <div
+          className={styles.filterHeader}
+          onClick={() => setBrandsOpen(!brandsOpen)}
+        >
+          <h3>Бренды</h3>
+          <span className={styles.arrow}>{brandsOpen ? '▼' : '►'}</span>
         </div>
+
+        {brandsOpen && (
+          <div className={styles.dropdownContent}>
+            {brands.map(brand => (
+              <label key={brand.id} className={styles.option}>
+                <input
+                  type="checkbox"
+                  checked={filters.brands.includes(brand.slug)}
+                  onChange={() => handleBrandChange(brand.slug)}
+                  className={styles.checkbox}
+                />
+                <span className={styles.optionLabel}>{brand.name}</span>
+              </label>
+            ))}
+          </div>
+        )}
       </div>
 
-      {/* Секция размеров */}
+      {/* Секция размеров с выпадающим списком */}
       <div className={styles.filterGroup}>
-        <h3>Размеры</h3>
-        <div className={styles.sizesContainer}>
-          {availableSizes.map(size => (
-            <button
-              key={size}
-              className={`${styles.sizeButton} ${
-                filters.sizes.includes(size) ? styles.selected : ''
-              }`}
-              onClick={() => handleSizeChange(size)}
-            >
-              {size}
-            </button>
-          ))}
+        <div
+          className={styles.filterHeader}
+          onClick={() => setSizesOpen(!sizesOpen)}
+        >
+          <h3>Размеры</h3>
+          <span className={styles.arrow}>{sizesOpen ? '▼' : '►'}</span>
         </div>
+
+        {sizesOpen && (
+          <div className={styles.dropdownContent}>
+            <div className={styles.sizesGrid}>
+              {availableSizes.map(size => (
+                <label key={size} className={styles.sizeOption}>
+                  <input
+                    type="checkbox"
+                    checked={filters.sizes.includes(size)}
+                    onChange={() => handleSizeChange(size)}
+                    className={styles.checkbox}
+                  />
+                  <span className={styles.sizeLabel}>{size}</span>
+                </label>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

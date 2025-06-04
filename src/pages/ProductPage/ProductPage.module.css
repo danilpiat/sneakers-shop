@@ -1,120 +1,149 @@
 .container {
-  max-width: 1200px;
+  max-width: 100%;
   margin: 0 auto;
   padding: 20px;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 40px;
-}
-
-.backButton {
-  grid-column: 1 / -1;
-  background: none;
-  border: none;
-  cursor: pointer;
-  font-size: 16px;
-  color: #333;
-  padding: 10px 0;
-  text-align: left;
-}
-
-.backButton:hover {
-  color: #000;
-}
-
-.imageGallery {
   display: flex;
   flex-direction: column;
   gap: 20px;
+  padding-bottom: 120px; /* Увеличили отступ для нижней панели */
+}
+
+.imageCarousel {
+  position: relative;
+  width: 95%; /* 95% ширины страницы */
+  margin: 0 auto; /* Центрирование */
+  height: 400px;
+  overflow: hidden;
+  border-radius: 12px;
 }
 
 .mainImage {
   width: 100%;
-  height: auto;
-  border-radius: 8px;
-  object-fit: cover;
+  height: 100%;
+  object-fit: contain; /* Масштабирование с сохранением пропорций */
 }
 
-.details {
+.carouselButton {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255, 255, 255, 0.7);
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
   display: flex;
-  flex-direction: column;
-  gap: 20px;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 2;
+  font-size: 20px;
+  font-weight: bold;
 }
 
-.title {
+.prevButton {
+  left: 15px;
+}
+
+.nextButton {
+  right: 15px;
+}
+
+.productHeader {
+  text-align: center;
+  padding: 10px 0;
+}
+
+.brandName {
+  font-size: 18px;
+  color: #666;
+  margin: 0 0 5px 0;
+}
+
+.productTitle {
   font-size: 28px;
   margin: 0;
   color: #333;
 }
 
-.price {
-  font-size: 24px;
-  font-weight: bold;
-  color: #000;
-  margin: 10px 0;
+.colorSection {
+  margin-top: 10px;
 }
 
-.section {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.section h3 {
-  margin: 0;
+.colorSection h3 {
+  margin: 0 0 10px 0;
   font-size: 18px;
+  color: #333;
 }
 
-.models {
+.colorCarousel {
   display: flex;
-  flex-wrap: wrap;
+  overflow-x: auto;
   gap: 10px;
+  padding: 5px 0 15px;
+  -webkit-overflow-scrolling: touch;
 }
 
-.modelButton {
-  padding: 8px 16px;
+.colorButton {
+  flex: 0 0 auto;
+  padding: 10px 20px;
   border: 1px solid #ddd;
   background: white;
-  border-radius: 4px;
+  border-radius: 20px;
   cursor: pointer;
   transition: all 0.2s;
+  white-space: nowrap;
 }
 
-.modelButton:hover {
+.colorButton:hover {
   border-color: #999;
 }
 
-.modelButton.selected {
+.colorButton.selected {
   border-color: #000;
-  background: #f0f0f0;
+  background: #000;
+  color: white;
 }
 
-.sizes {
-  display: flex;
-  flex-wrap: wrap;
+.sizeSection {
+  margin-top: 10px;
+}
+
+.sizeSection h3 {
+  margin: 0 0 10px 0;
+  font-size: 18px;
+  color: #333;
+}
+
+.sizeGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
   gap: 10px;
 }
 
-.size {
-  padding: 8px 16px;
+.sizeButton {
+  padding: 15px 5px;
   border: 1px solid #ddd;
   background: white;
-  border-radius: 4px;
+  border-radius: 8px;
   cursor: pointer;
   transition: all 0.2s;
   position: relative;
+  text-align: center;
+  font-size: 16px;
 }
 
-.size:hover {
+.sizeButton:hover {
   border-color: #999;
 }
 
-.size.selected {
+.sizeButton.selected {
   border-color: #000;
-  background: #f0f0f0;
+  background: #000;
+  color: white;
 }
 
-.size.outOfStock {
+.sizeButton.outOfStock {
   opacity: 0.5;
   cursor: not-allowed;
 }
@@ -123,42 +152,69 @@
   display: block;
   font-size: 10px;
   color: red;
+  margin-top: 5px;
+}
+
+.descriptionSection {
+  margin-top: 30px;
+  padding: 20px 0;
+  border-top: 1px solid #eee;
+}
+
+.descriptionSection h3 {
+  margin: 0 0 15px 0;
+  font-size: 20px;
+  color: #333;
 }
 
 .description {
   line-height: 1.6;
   color: #555;
+  font-size: 16px;
 }
 
-.brandSection {
-  margin-top: 20px;
-}
-
-.brandInfo {
+.bottomPanel {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: white;
+  padding: 15px 20px;
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  gap: 10px;
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+  z-index: 100;
 }
 
-.brandLogo {
-  max-height: 40px;
-  max-width: 100px;
+.priceContainer {
+  display: flex;
+  flex-direction: column;
 }
 
-.brandName {
+.priceLabel {
+  font-size: 14px;
+  color: #666;
+}
+
+.priceValue {
+  font-size: 22px;
   font-weight: bold;
+  color: #000;
 }
 
 .addToCart {
-  padding: 15px;
+  padding: 15px 30px;
   background: #000;
   color: white;
   border: none;
-  border-radius: 4px;
+  border-radius: 8px;
   font-size: 16px;
+  font-weight: bold;
   cursor: pointer;
-  margin-top: 20px;
   transition: background 0.2s;
+  flex-grow: 1;
+  max-width: 200px;
 }
 
 .addToCart:hover {
@@ -175,8 +231,54 @@
   text-align: center;
   padding: 40px;
   font-size: 18px;
+  width: 100%;
 }
 
 .error {
   color: red;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+  .imageCarousel {
+    height: 350px;
+  }
+
+  .productTitle {
+    font-size: 24px;
+  }
+
+  .sizeGrid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .imageCarousel {
+    height: 300px;
+  }
+
+  .productTitle {
+    font-size: 22px;
+  }
+
+  .bottomPanel {
+    flex-direction: column;
+    gap: 10px;
+    padding: 15px;
+  }
+
+  .priceContainer {
+    width: 100%;
+    text-align: center;
+  }
+
+  .addToCart {
+    width: 100%;
+    max-width: none;
+  }
+
+  .container {
+    padding-bottom: 150px; /* Больший отступ для мобильных */
+  }
 }
