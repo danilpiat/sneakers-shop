@@ -52,7 +52,7 @@ const ProductPage = () => {
       setError(null);
 
       try {
-        const productResponse = await fetch(`${process.env.REACT_APP_API_BASE_URL}/products/${id}/`);
+        const productResponse = await fetch(`api/products/${id}/`);
         if (!productResponse.ok) throw new Error('Ошибка загрузки товара');
         const productData = await productResponse.json();
 
