@@ -52,7 +52,8 @@ const ProductPage = () => {
       setError(null);
 
       try {
-        const productResponse = await fetch(`api/products/${id}/`);
+        const host = window.location.host;
+        const productResponse = await fetch(`http://${host}/api/products/${id}/`);
         if (!productResponse.ok) throw new Error('Ошибка загрузки товара');
         const productData = await productResponse.json();
 
