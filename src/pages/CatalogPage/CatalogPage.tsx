@@ -61,7 +61,7 @@ const CatalogPage = () => {
   const fetchBrands = async () => {
     try {
       const host = window.location.host; // "193.233.103.140"
-      const response = await fetch(`http://${host}api/brands/`);
+      const response = await fetch(`http://${host}/api/brands/`);
       if (!response.ok) throw new Error('Ошибка загрузки брендов');
       const data = await response.json();
       setBrands(data);

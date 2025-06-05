@@ -22,7 +22,7 @@ const CatalogCategoriesPage = () => {
     const fetchCategories = async () => {
       try {
         const host = window.location.host;
-        const response = await fetch(`http://${host}api/categories/`);
+        const response = await fetch(`http://${host}/api/categories/`);
         if (!response.ok) throw new Error('Ошибка загрузки категорий');
         const data = await response.json();
         setCategories(data);
