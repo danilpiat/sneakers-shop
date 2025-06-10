@@ -183,7 +183,7 @@ const CatalogPage = () => {
   return (
     <div className={styles.container}>
       <h1 className={styles.title}>
-        {categoryParam ? `Категория: ${categoryParam}` : 'Каталог кроссовок'}
+        {categoryParam ? `Категория: ${categoryParam}` : ''}
       </h1>
 
       <div className={styles.controls}>

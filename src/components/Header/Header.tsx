@@ -1,4 +1,4 @@
-import {Link, useLocation, useNavigate} from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import styles from './Header.module.css';
 
 const Header = () => {
@@ -6,40 +6,54 @@ const Header = () => {
   const navigate = useNavigate();
 
   const handleCatalogClick = (e: React.MouseEvent) => {
-    e.preventDefault(); // отменяем переход по ссылке по умолчанию
-
+    e.preventDefault();
     if (location.pathname === '/catalog/categories') {
-      // Уже на странице каталога — возвращаемся назад
       navigate(-1);
     } else {
-      // Идём на страницу каталога
       navigate('/catalog/categories');
     }
   };
 
+  // Заглушки для новых страниц
+  const goToPayment = () => navigate('/payment');
+  const goToContacts = () => navigate('/contacts');
+
   return (
     <header className={styles.header}>
-      <div className={styles.leftSection}>
-        {/* Заменили Link на span с onClick */}
-        <a
-          href="/catalog/categories"
-          className={styles.burgerButton}
-          onClick={handleCatalogClick}
-        >
-          <span>☰</span> Каталог
-        </a>
-      </div>
-
-      <div className={styles.centerSection}>
-        <Link to="/" className={styles.logo}>
-          SNEAKER CULTURE
+      {/* Первая строка - название магазина */}
+      <div className={styles.topRow}>
+        <Link to="/" className={styles.storeName}>
+          «SNEAKER CULTURE STORE»
         </Link>
       </div>
 
-      <div className={styles.rightSection}>
-        <Link to="/cart" className={styles.cartButton}>
-          <span>🛒</span>
-        </Link>
+      {/* Вторая строка - кнопки оплаты и контактов */}
+      <div className={styles.middleRow}>
+        <button className={styles.infoButton} onClick={goToPayment}>
+          Оплата
+        </button>
+        <button className={styles.infoButton} onClick={goToContacts}>
+          Контакты
+        </button>
+      </div>
+
+      {/* Третья строка - каталог и корзина */}
+      <div className={styles.bottomRow}>
+        <div className={styles.leftSection}>
+          <a
+            href="/catalog/categories"
+            className={styles.burgerButton}
+            onClick={handleCatalogClick}
+          >
+            <span>☰</span> Каталог
+          </a>
+        </div>
+
+        <div className={styles.rightSection}>
+          <Link to="/cart" className={styles.cartButton}>
+            <span>🛒</span>
+          </Link>
+        </div>
       </div>
     </header>
   );

@@ -65,7 +65,7 @@ const CatalogCategoriesPage = () => {
   return (
     <div className={styles.container}>
       <div className={styles.content}>
-        <h1 className={styles.title}>Категории обуви</h1>
+        <h1 className={styles.title}>Категории</h1>
         {loading && <div className={styles.loading}>Загрузка категорий...</div>}
         {error && <div className={styles.error}>{error}</div>}
 

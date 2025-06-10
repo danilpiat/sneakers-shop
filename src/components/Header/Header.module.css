@@ -1,21 +1,67 @@
 .header {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 15px 20px;
+  flex-direction: column;
+  padding: 10px 20px;
   background: rgba(15, 23, 42, 0.9);
   border-radius: 12px;
-  margin-bottom: 20px;
+  margin-bottom: 0px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
-.leftSection, .rightSection {
-  flex: 1;
+/* Общие стили для строк */
+.topRow,
+.middleRow,
+.bottomRow {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5px 0;
 }
 
-.centerSection {
-  flex: 2;
+/* Стили для верхней строки */
+.topRow {
+  padding-top: 10px;
+}
+
+.storeName {
+  color: #f8fafc;
+  font-size: 18px;
+  font-weight: bold;
+  letter-spacing: 1px;
   text-align: center;
+}
+
+/* Стили для средней строки */
+.middleRow {
+  gap: 20px;
+  padding: 10px 0;
+}
+
+.infoButton {
+  background: transparent;
+  color: #f8fafc;
+  border: none;
+  font-size: 14px;
+  cursor: pointer;
+  padding: 5px 10px;
+  border-radius: 6px;
+  transition: background 0.3s;
+}
+
+.infoButton:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* Стили для нижней строки */
+.bottomRow {
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 10px;
+}
+
+.leftSection,
+.rightSection {
+  flex: 1;
 }
 
 .burgerButton {
@@ -24,23 +70,33 @@
   gap: 8px;
   background: #1e293b;
   color: #f8fafc;
-  padding: 4px 8px;
+  padding: 6px 12px;
   border-radius: 8px;
   text-decoration: none;
   font-weight: 500;
   transition: background 0.3s;
+  width: fit-content;
 }
 
-.burgerButton:hover {
-  background: #2d3b51;
-}
-
-.logo {
+.burgerButton,
+.cartButton {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #1e293b;
   color: #f8fafc;
-  font-size: 16px;
-  font-weight: bold;
+  padding: 6px 12px;
+  border-radius: 8px;
   text-decoration: none;
-  letter-spacing: 1px;
+  font-weight: 500;
+  transition: background 0.3s;
+  width: 120px; /* Фиксированная ширина */
+  height: 40px; /* Фиксированная высота */
+}
+
+.burgerButton:hover,
+.cartButton:hover {
+  background: #2d3b51;
 }
 
 .cartButton {
@@ -50,14 +106,16 @@
   gap: 8px;
   background: #1e293b;
   color: #f8fafc;
-  padding: 4px 8px;
+  padding: 6px 12px;
   border-radius: 8px;
   text-decoration: none;
   font-weight: 500;
   transition: background 0.3s;
+  margin-left: auto;
 }
 
 .cartButton:hover {
   background: #2d3b51;
   transform: scale(1.05);
 }
+

@@ -6,6 +6,7 @@
   flex-direction: column;
   gap: 20px;
   padding-bottom: 120px; /* Увеличили отступ для нижней панели */
+  color: white; /* Основной цвет текста - белый */
 }
 
 .imageCarousel {
@@ -56,17 +57,16 @@
 
 .brandName {
   font-size: 18px;
-  color: #666;
   margin: 0 0 5px 0;
 }
 
 .productTitle {
-  font-size: 28px;
+   font-size: 28px;
   margin: 0;
-  color: #333;
 }
 
 .colorSection {
+  color: white;
   margin-top: 10px;
 }
 
@@ -93,6 +93,7 @@
   cursor: pointer;
   transition: all 0.2s;
   white-space: nowrap;
+  color: black;
 }
 
 .colorButton:hover {
@@ -107,6 +108,7 @@
 
 .sizeSection {
   margin-top: 10px;
+  color: white;
 }
 
 .sizeSection h3 {
@@ -117,13 +119,14 @@
 
 .sizeGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
   gap: 10px;
 }
 
 .sizeButton {
+  min-height: 65px; /* Еще немного уменьшили высоту */
+  padding: 6px 3px;
   position: relative;
-  padding: 8px 5px;
   border: 1px solid #ddd;
   border-radius: 4px;
   background: white;
@@ -132,7 +135,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  min-height: 70px; /* Уменьшенная высота */
+  color: black
 }
 
 .sizeButton:hover {
@@ -147,7 +150,7 @@
 
 .sizeValue {
   font-weight: bold;
-  font-size: 16px;
+  font-size: 15px;
 }
 
 .sizeButton.outOfStock {
@@ -171,12 +174,11 @@
 .descriptionSection h3 {
   margin: 0 0 15px 0;
   font-size: 20px;
-  color: #333;
+  color: white;
 }
 
 .description {
   line-height: 1.6;
-  color: #555;
   font-size: 16px;
 }
 
@@ -299,26 +301,26 @@
   }
 
   .sizePrice {
-    font-size: 12px;
+    font-size: 11px;
     color: #666;
     margin: 3px 0;
   }
 
   .inStockBadge {
-  background-color: #e8f5e9;
+  background-color: rgba(232, 245, 233, 0.9); /* Немного прозрачности */
   color: #2e7d32;
   border: 1px solid #c8e6c9;
 }
 
 .preOrderBadge {
-  background-color: #fff8e1;
-  color: #f57f17;
-  border: 1px solid #ffecb3;
-}
+    background-color: rgba(255, 248, 225, 0.9); /* Немного прозрачности */
+    color: #f57f17;
+    border: 1px solid #ffecb3;
+  }
 
   .stockBadge {
-    font-size: 10px;
-    padding: 2px 4px;
+    font-size: 9px;
+    padding: 1px 3px;
     border-radius: 3px;
     margin-top: 3px;
     width: 100%;
@@ -363,4 +365,25 @@
     background-color: #e0e0e0;
     color: #9e9e9e;
     cursor: not-allowed;
+  }
+
+  .backButton {
+    position: absolute;
+    top: 200px;
+    left: 20px;
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    border-radius: 20px;
+    padding: 8px 15px;
+    font-size: 14px;
+    cursor: pointer;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    backdrop-filter: blur(5px);
+  }
+  .backButton:hover {
+    background: rgba(0, 0, 0, 0.7);
   }

@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import styles from './ProductPage.module.css';
 
@@ -38,11 +38,12 @@ interface ProductDetail {
 
 const ProductPage = () => {
   const { id } = useParams();
+  const navigate = useNavigate(); // Хук для навигации
   const [product, setProduct] = useState<ProductDetail | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [selectedModel, setSelectedModel] = useState<ProductModel | null>(null);
-  const [selectedSize, setSelectedSize] = useState<SizeItem | null>(null); // Теперь храним весь объект размера
+  const [selectedSize, setSelectedSize] = useState<SizeItem | null>(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   // Загрузка товара
@@ -114,6 +115,11 @@ const ProductPage = () => {
 
   return (
     <div className={styles.container}>
+      {/* Кнопка "Назад" */}
+      <button className={styles.backButton} onClick={() => navigate(-1)}>
+        &larr; Назад
+      </button>
+
       {/* Карусель изображений */}
       <div className={styles.imageCarousel}>
         {images.length > 1 && (
