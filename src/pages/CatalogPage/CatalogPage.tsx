@@ -50,6 +50,7 @@ const CatalogPage = () => {
     minPrice: 0,
     maxPrice: 100000,
   });
+  const [searchTerm, setSearchTerm] = useState('');
 
 
   const abortControllerRef = useRef<AbortController | null>(null);
@@ -97,6 +98,9 @@ const CatalogPage = () => {
       // Добавляем категорию, если она есть
       if (categoryParam) {
         params.append('category', categoryParam);
+      }
+      if (searchTerm) {
+        params.append('search', searchTerm);
       }
 
       if (sortBy !== 'default') {
@@ -168,7 +172,7 @@ const CatalogPage = () => {
         abortControllerRef.current.abort();
       }
     };
-  }, [currentPage, sortBy, filters, categoryParam]);
+  }, [currentPage, sortBy, filters, categoryParam, searchTerm]);
 
   const handleSortChange = (newSort: string) => {
     setSortBy(newSort);
@@ -178,6 +182,7 @@ const CatalogPage = () => {
   const handleFilterChange = (newFilters: Filters) => {
   setFilters(newFilters);
   setCurrentPage(1);
+  setSearchTerm(''); // Сбрасываем поиск при изменении фильтров
 };
 
   return (
@@ -185,6 +190,24 @@ const CatalogPage = () => {
       <h1 className={styles.title}>
         {categoryParam ? `Категория: ${categoryParam}` : ''}
       </h1>
+
+      <div className={styles.searchContainer}>
+          <input
+            type="text"
+            placeholder="Поиск по названию..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className={styles.searchInput}
+          />
+          {searchTerm && (
+            <button
+              className={styles.clearSearchButton}
+              onClick={() => setSearchTerm('')}
+            >
+              ×
+            </button>
+          )}
+        </div>
 
       <div className={styles.controls}>
         <FilterPanel
