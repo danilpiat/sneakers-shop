@@ -60,8 +60,15 @@ const CatalogPage = () => {
 
   const fetchBrands = async () => {
     try {
-      const host = window.location.host; // "193.233.103.140"
-      const response = await fetch(`http://${host}/api/brands/`);
+      let host = window.location.host;
+
+      if (host === 'localhost:3000') {
+          host = 'http://127.0.0.1:8000';
+        }
+        else {
+          host = 'https://'.concat(host);
+        }
+      const response = await fetch(`${host}/api/brands/`);
       if (!response.ok) throw new Error('Ошибка загрузки брендов');
       const data = await response.json();
       setBrands(data);
@@ -107,9 +114,16 @@ const CatalogPage = () => {
       params.append('min_price', filters.minPrice.toString());
       params.append('max_price', filters.maxPrice.toString());
 
-      const host = window.location.host;
+      let host = window.location.host;
+
+      if (host === 'localhost:3000') {
+          host = 'http://127.0.0.1:8000';
+        }
+        else {
+          host = 'https://'.concat(host);
+        }
       const response = await fetch(
-        `http://${host}/api/products/?${params.toString()}`,
+        `${host}/api/products/?${params.toString()}`,
         { signal: controller.signal }
       );
 

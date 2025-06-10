@@ -21,8 +21,15 @@ const CatalogCategoriesPage = () => {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const host = window.location.host;
-        const response = await fetch(`http://${host}/api/categories/`);
+        let host = window.location.host;
+
+        if (host === 'localhost:3000') {
+          host = 'http://127.0.0.1:8000';
+        }
+        else {
+          host = 'https://'.concat(host);
+        }
+        const response = await fetch(`${host}/api/categories/`);
         if (!response.ok) throw new Error('Ошибка загрузки категорий');
         const data = await response.json();
         setCategories(data);

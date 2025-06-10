@@ -52,8 +52,15 @@ const ProductPage = () => {
       setError(null);
 
       try {
-        const host = window.location.host;
-        const productResponse = await fetch(`http://${host}/api/products/${id}/`);
+        let host = window.location.host;
+
+        if (host === 'localhost:3000') {
+          host = 'http://127.0.0.1:8000';
+        }
+        else {
+          host = 'https://'.concat(host);
+        }
+        const productResponse = await fetch(`${host}/api/products/${id}/`);
         if (!productResponse.ok) throw new Error('Ошибка загрузки товара');
         const productData = await productResponse.json();
 
