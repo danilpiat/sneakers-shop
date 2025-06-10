@@ -28,7 +28,12 @@ const FilterPanel: React.FC<FilterPanelProps> = ({
   const [sizesOpen, setSizesOpen] = useState(false);
 
   // Доступные размеры
-  const availableSizes = [36, 37, 38, 39, 40, 41, 42, 43, 44, 45];
+  const availableSizes = [
+    36.5, 37.5, 38, 38.5, 39,
+    40, 40.5, 41, 42, 42.5,
+    43, 44, 44.5, 45, 45.5,
+    46, 47, 47.5, 48.5, 49.5
+  ];
 
   const handleBrandChange = (brandSlug: string) => {
     const newBrands = filters.brands.includes(brandSlug)

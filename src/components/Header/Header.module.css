@@ -24,7 +24,7 @@
   gap: 8px;
   background: #1e293b;
   color: #f8fafc;
-  padding: 8px 15px;
+  padding: 4px 8px;
   border-radius: 8px;
   text-decoration: none;
   font-weight: 500;
@@ -37,7 +37,7 @@
 
 .logo {
   color: #f8fafc;
-  font-size: 24px;
+  font-size: 16px;
   font-weight: bold;
   text-decoration: none;
   letter-spacing: 1px;
@@ -47,14 +47,13 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 40px;
-  height: 40px;
+  gap: 8px;
   background: #1e293b;
   color: #f8fafc;
-  border-radius: 50%;
+  padding: 4px 8px;
+  border-radius: 8px;
   text-decoration: none;
-  font-size: 20px;
-  margin-left: auto;
+  font-weight: 500;
   transition: background 0.3s;
 }
 

@@ -177,18 +177,24 @@ const ProductPage = () => {
                 key={sizeItem.size}
                 className={`${styles.sizeButton} ${
                   selectedSize?.size === sizeItem.size ? styles.selected : ''
-                } ${sizeItem.stock <= 0 ? styles.outOfStock : ''}`}
+                }`}
                 onClick={() => setSelectedSize(sizeItem)}
-                disabled={sizeItem.stock <= 0}
               >
-                <div>{sizeItem.size}</div>
+                <div className={styles.sizeValue}>{sizeItem.size}</div>
                 <div className={styles.sizePrice}>{sizeItem.price.toLocaleString()} ₽</div>
-                {sizeItem.stock <= 0 && <span className={styles.stockLabel}>Нет в наличии</span>}
+
+                {/* Статус наличия */}
+                <div className={`${styles.stockBadge} ${
+                  sizeItem.stock > 0 ? styles.inStockBadge : styles.preOrderBadge
+                }`}>
+                  {sizeItem.stock > 0 ? 'В наличии' : 'Под заказ'}
+                </div>
               </button>
             ))}
           </div>
         </div>
       )}
+
 
       {/* Описание товара */}
       <div className={styles.descriptionSection}>
@@ -208,12 +214,26 @@ const ProductPage = () => {
                 : 'Цена не указана'}
           </span>
         </div>
-        <button
-          className={styles.addToCart}
-          disabled={!selectedSize}
-        >
-          Добавить в корзину
-        </button>
+
+        {/* Динамическая кнопка в зависимости от наличия */}
+        {selectedSize ? (
+          <button
+            className={`${styles.addButton} ${
+              selectedSize.stock > 0 
+                ? styles.addToCartButton 
+                : styles.preOrderButton
+            }`}
+          >
+            {selectedSize.stock > 0 ? 'Добавить в корзину' : 'Заказать'}
+          </button>
+        ) : (
+          <button
+            className={`${styles.addButton} ${styles.disabledButton}`}
+            disabled
+          >
+            Выберите размер
+          </button>
+        )}
       </div>
     </div>
   );

@@ -32,7 +32,7 @@ const Header = () => {
 
       <div className={styles.centerSection}>
         <Link to="/" className={styles.logo}>
-          SneakersShop
+          SNEAKER CULTURE
         </Link>
       </div>
 
