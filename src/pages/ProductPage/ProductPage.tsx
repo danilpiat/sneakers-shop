@@ -117,7 +117,8 @@ const ProductPage = () => {
       size: parseFloat(selectedSize.size), // Преобразуем размер в число
       color: selectedModel.color,
       price: selectedSize.price,
-      quantity: 1
+      quantity: 1,
+      isPreOrder: selectedSize.stock === 0 // <- добавлено
     };
 
     dispatch({ type: 'ADD_ITEM', payload: cartItem });

@@ -135,3 +135,13 @@
 .checkoutButton:hover {
   background-color: #3d8b40;
 }
+.preOrderBadge {
+  display: inline-block;
+  margin-top: 4px;
+  padding: 4px 8px;
+  background-color: #f9c74f;
+  color: #333;
+  font-size: 0.9rem;
+  border-radius: 6px;
+  font-weight: 500;
+}

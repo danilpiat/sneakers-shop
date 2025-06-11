@@ -30,6 +30,9 @@ const CartPage = () => {
                   <p className={styles.itemDetail}>Цвет: {item.color}</p>
                   <p className={styles.itemDetail}>Размер: {item.size}</p>
                   <p className={styles.itemDetail}>Цена: {item.price} руб.</p>
+                  {item.isPreOrder && (
+                    <span className={styles.preOrderBadge}>Под заказ</span> // <- новая плашка
+                  )}
                 </div>
 
                 <div className={styles.quantityControl}>

@@ -3,10 +3,11 @@ import React, { createContext, useContext, useReducer, type ReactNode } from 're
 interface CartItem {
   id: string;
   title: string;
-  size: number; // Изменяем тип на number
+  size: number;
   color: string;
   price: number;
   quantity: number;
+  isPreOrder?: boolean; // <- добавлено
   imageUrl?: string;
 }
 
