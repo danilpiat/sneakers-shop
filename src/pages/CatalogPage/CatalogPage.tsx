@@ -32,6 +32,7 @@ interface Filters {
   sizes: number[];
   minPrice: number;
   maxPrice: number;
+  inStock: boolean; // Добавляем новое поле
 }
 
 const CatalogPage = () => {
@@ -49,7 +50,9 @@ const CatalogPage = () => {
     sizes: [] as number[],
     minPrice: 0,
     maxPrice: 100000,
+    inStock: false, // Добавляем начальное значение
   });
+
   const [searchTerm, setSearchTerm] = useState('');
 
 
@@ -115,6 +118,10 @@ const CatalogPage = () => {
       if (filters.sizes.length > 0) {
         filters.sizes.forEach(size => params.append('size', size.toString()));
       }
+      if (filters.inStock) {
+        params.append('in_stock', 'true');
+      }
+
       params.append('min_price', filters.minPrice.toString());
       params.append('max_price', filters.maxPrice.toString());
 

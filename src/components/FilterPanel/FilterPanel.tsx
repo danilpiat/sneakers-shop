@@ -6,6 +6,7 @@ interface Filters {
   sizes: number[];
   minPrice: number;
   maxPrice: number;
+  inStock: boolean; // Добавляем новое поле
 }
 
 interface FilterPanelProps {
@@ -14,6 +15,7 @@ interface FilterPanelProps {
     sizes: number[];
     minPrice: number;
     maxPrice: number;
+    inStock: boolean; // Добавляем новое поле
   };
   brands: Array<{ id: string; name: string; slug: string }>;
   onFilterChange: (filters: Filters) => void;
@@ -26,6 +28,10 @@ const FilterPanel: React.FC<FilterPanelProps> = ({
 }) => {
   const [brandsOpen, setBrandsOpen] = useState(false);
   const [sizesOpen, setSizesOpen] = useState(false);
+
+  const handleInStockChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    onFilterChange({ ...filters, inStock: e.target.checked });
+  };
 
   // Доступные размеры
   const availableSizes = [
@@ -56,7 +62,8 @@ const FilterPanel: React.FC<FilterPanelProps> = ({
       brands: [],
       sizes: [],
       minPrice: 0,
-      maxPrice: 100000
+      maxPrice: 100000,
+      inStock: false
     });
   };
 
@@ -124,7 +131,20 @@ const FilterPanel: React.FC<FilterPanelProps> = ({
           </div>
         )}
       </div>
+
+      <div className={styles.filterGroup}>
+        <label className={styles.inStockToggle}>
+          <input
+            type="checkbox"
+            checked={filters.inStock}
+            onChange={handleInStockChange}
+            className={styles.toggleInput}
+          />
+          <span className={styles.toggleLabel}>В наличии</span>
+        </label>
+      </div>
     </div>
+
   );
 };
 
