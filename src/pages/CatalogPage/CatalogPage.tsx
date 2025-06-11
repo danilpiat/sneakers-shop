@@ -120,7 +120,7 @@ const CatalogPage = () => {
       }
       if (filters.inStock) {
         params.append('in_stock', 'true');
-      }
+        }
 
       params.append('min_price', filters.minPrice.toString());
       params.append('max_price', filters.maxPrice.toString());
