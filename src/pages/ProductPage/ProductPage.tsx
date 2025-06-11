@@ -1,6 +1,7 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import styles from './ProductPage.module.css';
+import { useCart } from '../contexts/CartContext';
 
 interface SizeItem {
   size: string;
@@ -45,7 +46,9 @@ const ProductPage = () => {
   const [selectedModel, setSelectedModel] = useState<ProductModel | null>(null);
   const [selectedSize, setSelectedSize] = useState<SizeItem | null>(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [isAdded, setIsAdded] = useState(false); // Новое состояние
 
+  const { dispatch } = useCart();
   // Загрузка товара
   useEffect(() => {
     const fetchProduct = async () => {
@@ -103,6 +106,27 @@ const ProductPage = () => {
   const prevImage = () => {
     const images = getAllImages();
     setCurrentImageIndex((prev) => (prev - 1 + images.length) % images.length);
+  };
+
+  const handleAddToCart = () => {
+    if (!selectedSize || !product || !selectedModel) return;
+
+    const cartItem = {
+      id: `${product.id}-${selectedModel.id}-${selectedSize.size}`,
+      title: product.title,
+      size: parseFloat(selectedSize.size), // Преобразуем размер в число
+      color: selectedModel.color,
+      price: selectedSize.price,
+      quantity: 1
+    };
+
+    dispatch({ type: 'ADD_ITEM', payload: cartItem });
+    setIsAdded(true); // Устанавливаем флаг добавления
+
+    // Сбрасываем состояние через 3 секунды
+    setTimeout(() => {
+      setIsAdded(false);
+    }, 1000);
   };
 
   if (loading) return <div className={styles.loading}>Загрузка товара...</div>;
@@ -224,13 +248,18 @@ const ProductPage = () => {
         {/* Динамическая кнопка в зависимости от наличия */}
         {selectedSize ? (
           <button
-            className={`${styles.addButton} ${
-              selectedSize.stock > 0 
+             className={`${styles.addButton} ${
+            isAdded 
+              ? styles.addedToCartButton 
+              : selectedSize.stock > 0 
                 ? styles.addToCartButton 
                 : styles.preOrderButton
-            }`}
+          }`}
+            onClick={handleAddToCart}
+             disabled={isAdded}
           >
-            {selectedSize.stock > 0 ? 'Добавить в корзину' : 'Заказать'}
+            {isAdded ? 'Добавлено в корзину' :
+           selectedSize.stock > 0 ? 'Добавить в корзину' : 'Заказать'}
           </button>
         ) : (
           <button

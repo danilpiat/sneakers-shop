@@ -339,7 +339,7 @@
     border-radius: 4px;
     font-weight: bold;
     cursor: pointer;
-    transition: all 0.3s;
+    transition: all 0.3s ease;
     font-size: 14px;
     width: 100%;
   }
@@ -387,3 +387,13 @@
   .backButton:hover {
     background: rgba(0, 0, 0, 0.7);
   }
+  .addedToCartButton {
+  background-color: #cccccc;
+  color: #666666;
+  cursor: default;
+  border: 1px solid #999999;
+}
+
+.addedToCartButton:hover {
+  background-color: #cccccc;
+}

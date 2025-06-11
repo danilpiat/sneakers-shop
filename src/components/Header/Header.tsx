@@ -1,9 +1,13 @@
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import styles from './Header.module.css';
+import { useCart } from '../../pages/contexts/CartContext';
 
 const Header = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  const { state } = useCart();
+
+  const cartItemCount = state.items.reduce((count, item) => count + item.quantity, 0);
 
   const handleCatalogClick = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -14,7 +18,6 @@ const Header = () => {
     }
   };
 
-  // Заглушки для новых страниц
   const goToPayment = () => navigate('/payment');
   const goToContacts = () => navigate('/contacts');
 
@@ -52,6 +55,9 @@ const Header = () => {
         <div className={styles.rightSection}>
           <Link to="/cart" className={styles.cartButton}>
             <span>🛒</span>
+            {cartItemCount > 0 && (
+              <span className={styles.cartBadge}>{cartItemCount}</span>
+            )}
           </Link>
         </div>
       </div>

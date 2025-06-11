@@ -3,10 +3,12 @@ import Header from './components/Header/Header';
 import CatalogPage from './pages/CatalogPage/CatalogPage';
 import CatalogCategoriesPage from './pages/CatalogCategoriesPage/CatalogCategoriesPage';
 import ProductPage from './pages/ProductPage/ProductPage';
-
+import CartPage from './pages/CartPage/CartPage'; // Новый компонент
+import { CartProvider } from './pages/contexts/CartContext'; // Импорт провайдера
 
 function App() {
   return (
+  <CartProvider>
     <div className="app">
       <Header />
       <Routes>
@@ -14,19 +16,12 @@ function App() {
         <Route path="/catalog" element={<CatalogPage />} />
         <Route path="/catalog/categories" element={<CatalogCategoriesPage />} />
         <Route path="/product/:id" element={<ProductPage />} />
-        <Route path="/cart" element={<CartStub />} />
+        <Route path="/cart" element={<CartPage />} /> {/* Обновленный роут */}
       </Routes>
     </div>
+  </CartProvider>
   );
 }
-
-// Заглушка для корзины
-const CartStub = () => (
-  <div className="container">
-    <h1>Корзина</h1>
-    <p>Раздел в разработке...</p>
-  </div>
-);
 
 
 export default App;
