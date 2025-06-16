@@ -58,9 +58,11 @@ const CatalogCategoriesPage = () => {
     }
   });
 
-  const handleCategoryClick = (categorySlug: string) => {
-    navigate(`/catalog?category=${categorySlug}`);
-  };
+  const handleCategoryClick = (categorySlug: string, categoryName: string) => {
+  // Кодируем название категории для безопасной передачи в URL
+  const encodedName = encodeURIComponent(categoryName);
+  navigate(`/catalog?category=${categorySlug}&category_name=${encodedName}`);
+};
 
   return (
     <div className={styles.container}>
@@ -76,13 +78,13 @@ const CatalogCategoriesPage = () => {
                 <div className={styles.rootCategoryHeader}>
                   <h2
                     className={styles.rootCategoryTitle}
-                    onClick={() => handleCategoryClick(rootCategory.slug)}
+                    onClick={() => handleCategoryClick(rootCategory.slug, rootCategory.name)}
                   >
                     {rootCategory.name}
                   </h2>
                   <button
                     className={styles.showAllButton}
-                    onClick={() => handleCategoryClick(rootCategory.slug)}
+                    onClick={() => handleCategoryClick(rootCategory.slug, rootCategory.name)}
                   >
                     Показать все
                   </button>
@@ -97,7 +99,7 @@ const CatalogCategoriesPage = () => {
                           <div
                             key={category.id}
                             className={styles.categoryCard}
-                            onClick={() => handleCategoryClick(category.slug)}
+                            onClick={() => handleCategoryClick(category.slug, category.name)}
                           >
                             {category.image ? (
                               <img
@@ -123,7 +125,7 @@ const CatalogCategoriesPage = () => {
                     {groupedCategories[rootCategory.id].length > 8 && (
                       <button
                         className={styles.showAllChildButton}
-                        onClick={() => handleCategoryClick(rootCategory.slug)}
+                        onClick={() => handleCategoryClick(rootCategory.slug, rootCategory.name)}
                       >
                         Показать все
                       </button>

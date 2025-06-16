@@ -60,7 +60,12 @@ const CatalogPage = () => {
 
   const pageSize = 30;
 
-  const categoryParam = new URLSearchParams(location.search).get('category');
+  const queryParams = new URLSearchParams(location.search);
+  const categoryParam = queryParams.get('category');
+  const categoryNameParam = queryParams.get('category_name');
+  const decodedCategoryName = categoryNameParam
+    ? decodeURIComponent(categoryNameParam)
+    : null;
 
   const fetchBrands = async () => {
     try {
@@ -195,7 +200,7 @@ const CatalogPage = () => {
   return (
     <div className={styles.container}>
       <h1 className={styles.title}>
-        {categoryParam ? `Категория: ${categoryParam}` : ''}
+        {decodedCategoryName ? `Категория: ${decodedCategoryName}` : ''}
       </h1>
 
       <div className={styles.searchContainer}>
