@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef  } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import ProductCard from '../../components/ProductCard/ProductCard';
-import Pagination from '../../components/Pagination/Pagination';
+// import Pagination from '../../components/Pagination/Pagination';
 import SortSelect from '../../components/SortSelect/SortSelect';
 import FilterPanel from '../../components/FilterPanel/FilterPanel';
 import styles from './CatalogPage.module.css';
@@ -40,7 +40,7 @@ const CatalogPage = () => {
   const location = useLocation();
   const [products, setProducts] = useState<Product[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [totalItems, setTotalItems] = useState(0);
+  // const [totalItems, setTotalItems] = useState(0);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [brands, setBrands] = useState<Brand[]>([]);
@@ -144,7 +144,7 @@ const CatalogPage = () => {
 
       const data = await response.json();
       setProducts(data);
-      setTotalItems(data.length);
+      // setTotalItems(data.length);
     } catch (err) {
       // Игнорируем ошибки отмены запроса
       setError('Не удалось загрузить товары. Попробуйте позже.');
@@ -250,12 +250,12 @@ const CatalogPage = () => {
               </div>
 
               {/* Пагинация */}
-              <Pagination
-                currentPage={currentPage}
-                totalItems={totalItems}
-                pageSize={pageSize}
-                onPageChange={setCurrentPage}
-              />
+              {/*<Pagination*/}
+              {/*  currentPage={currentPage}*/}
+              {/*  totalItems={totalItems}*/}
+              {/*  pageSize={pageSize}*/}
+              {/*  onPageChange={setCurrentPage}*/}
+              {/*/>*/}
             </>
           )}
         </>
