@@ -12,7 +12,7 @@
 .emptyMessage {
   text-align: center;
   font-size: 1.2rem;
-  color: #666;
+  color: white;
 }
 
 .itemsContainer {
@@ -41,7 +41,7 @@
 
 .itemDetail {
   margin: 5px 0;
-  color: #555;
+  color: white;
 }
 
 .quantityControl {
