@@ -2,6 +2,8 @@ import React, { createContext, useContext, useReducer, type ReactNode } from 're
 
 interface CartItem {
   id: string;
+  productId: string; // Добавим ID товара
+  modelId: string;   // Добавим ID модели
   title: string;
   size: number;
   color: string;
@@ -9,6 +11,7 @@ interface CartItem {
   quantity: number;
   isPreOrder?: boolean; // <- добавлено
   imageUrl?: string;
+  stock?: number;    // Добавим остаток на складе
 }
 
 interface CartState {

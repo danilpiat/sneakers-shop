@@ -1,0 +1,91 @@
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: 'Courier New', monospace;
+  background-color: white;
+  color: #000;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.title {
+  text-align: center;
+  font-size: 24px;
+  margin-bottom: 20px;
+  border-bottom: 2px dashed #000;
+  padding-bottom: 10px;
+}
+
+.orderInfo {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.infoLine {
+  margin: 5px 0;
+}
+
+.itemsHeader {
+  display: flex;
+  font-weight: bold;
+  border-bottom: 1px solid #000;
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+}
+
+.itemName {
+  flex: 2;
+}
+
+.itemDetails {
+  flex: 2;
+}
+
+.itemPrice,
+.itemQuantity,
+.itemTotal {
+  flex: 1;
+  text-align: right;
+}
+
+.orderItem {
+  display: flex;
+  padding: 10px 0;
+  border-bottom: 1px dashed #ccc;
+}
+
+.preOrderBadge {
+  background-color: #ff9800;
+  color: white;
+  padding: 2px 5px;
+  border-radius: 3px;
+  font-size: 0.8rem;
+  margin-left: 10px;
+}
+
+.summary {
+  margin-top: 20px;
+  border-top: 2px solid #000;
+  padding-top: 10px;
+}
+
+.totalLine {
+  display: flex;
+  justify-content: space-between;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.footer {
+  margin-top: 30px;
+  text-align: center;
+  font-style: italic;
+  border-top: 1px dashed #000;
+  padding-top: 20px;
+}
+
+.emptyMessage {
+  text-align: center;
+  font-size: 1.2rem;
+  color: #666;
+}

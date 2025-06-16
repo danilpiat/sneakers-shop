@@ -113,12 +113,15 @@ const ProductPage = () => {
 
     const cartItem = {
       id: `${product.id}-${selectedModel.id}-${selectedSize.size}`,
+      productId: product.id, // Добавляем ID товара
+      modelId: selectedModel.id, // Добавляем ID модели
       title: product.title,
       size: parseFloat(selectedSize.size), // Преобразуем размер в число
       color: selectedModel.color,
       price: selectedSize.price,
       quantity: 1,
-      isPreOrder: selectedSize.stock === 0 // <- добавлено
+      isPreOrder: selectedSize.stock === 0, // <- добавлено
+      stock: selectedSize.stock // Добавляем остаток
     };
 
     dispatch({ type: 'ADD_ITEM', payload: cartItem });

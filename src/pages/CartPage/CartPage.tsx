@@ -1,8 +1,10 @@
 import { useCart } from '../contexts/CartContext';
 import styles from './CartPage.module.css';
+import { useNavigate } from 'react-router-dom';
 
 const CartPage = () => {
   const { state, dispatch } = useCart();
+  const navigate = useNavigate();
 
   const totalAmount = state.items.reduce(
     (total, item) => total + item.price * item.quantity,
@@ -10,8 +12,23 @@ const CartPage = () => {
   );
 
   const handleCheckout = () => {
-    // Заглушка для оформления заказа
-    alert('Заказ оформлен! Спасибо за покупку!');
+    navigate('/checkout', {
+      state: {
+        items: state.items.map(item => ({
+          id: item.id,
+          title: item.title,
+          size: item.size,
+          color: item.color,
+          price: item.price,
+          quantity: item.quantity,
+          isPreOrder: item.isPreOrder,
+          stock: item.stock,
+          modelId: item.modelId,
+          productId: item.productId
+        }))
+      }
+    });
+    dispatch({ type: 'CLEAR_CART' });
   };
 
   return (
