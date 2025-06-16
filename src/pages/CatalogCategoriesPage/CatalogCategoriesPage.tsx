@@ -90,47 +90,76 @@ const CatalogCategoriesPage = () => {
                   </button>
                 </div>
 
-                {groupedCategories[rootCategory.id] && (
+                {/* Особый случай для "Баскетбольные кроссовки" */}
+                {rootCategory.slug === 'basketbolnye-krossovki' ? (
                   <div className={styles.mosaicContainer}>
                     <div className={styles.mosaicGrid}>
-                      {groupedCategories[rootCategory.id]
-                        .slice(0, 8) // Ограничиваем двумя рядами (4x2)
-                        .map(category => (
-                          <div
-                            key={category.id}
-                            className={styles.categoryCard}
-                            onClick={() => handleCategoryClick(category.slug, category.name)}
-                          >
-                            {category.image ? (
-                              <img
-                                src={`data:image/jpeg;base64,${category.image}`}
-                                alt={category.name}
-                                className={styles.categoryImage}
-                                onError={(e) => {
-                                  e.currentTarget.src = '/placeholder-image.jpg';
-                                }}
-                              />
-                            ) : (
-                              <div className={styles.categoryPlaceholder}>
-                                {category.name.charAt(0)}
-                              </div>
-                            )}
-                            <h3 className={styles.categoryName}>{category.name}</h3>
-                          </div>
-                        ))
-                      }
-                    </div>
-
-                    {/* Кнопка "Показать все" для дочерних категорий */}
-                    {groupedCategories[rootCategory.id].length > 8 && (
-                      <button
-                        className={styles.showAllChildButton}
+                      <div
+                        className={styles.categoryCard}
                         onClick={() => handleCategoryClick(rootCategory.slug, rootCategory.name)}
                       >
-                        Показать все
-                      </button>
-                    )}
+                        {rootCategory.image ? (
+                          <img
+                            src={`data:image/jpeg;base64,${rootCategory.image}`}
+                            alt={rootCategory.name}
+                            className={styles.categoryImage}
+                            onError={(e) => {
+                              e.currentTarget.src = '/placeholder-image.jpg';
+                            }}
+                          />
+                        ) : (
+                          <div className={styles.categoryPlaceholder}>
+                            {rootCategory.name.charAt(0)}
+                          </div>
+                        )}
+                        <h3 className={styles.categoryName}>{rootCategory.name}</h3>
+                      </div>
+                    </div>
                   </div>
+                ) : (
+                  // Стандартное отображение для других категорий
+                  groupedCategories[rootCategory.id] && (
+                    <div className={styles.mosaicContainer}>
+                      <div className={styles.mosaicGrid}>
+                        {groupedCategories[rootCategory.id]
+                          .slice(0, 8)
+                          .map(category => (
+                            <div
+                              key={category.id}
+                              className={styles.categoryCard}
+                              onClick={() => handleCategoryClick(category.slug, category.name)}
+                            >
+                              {category.image ? (
+                                <img
+                                  src={`data:image/jpeg;base64,${category.image}`}
+                                  alt={category.name}
+                                  className={styles.categoryImage}
+                                  onError={(e) => {
+                                    e.currentTarget.src = '/placeholder-image.jpg';
+                                  }}
+                                />
+                              ) : (
+                                <div className={styles.categoryPlaceholder}>
+                                  {category.name.charAt(0)}
+                                </div>
+                              )}
+                              <h3 className={styles.categoryName}>{category.name}</h3>
+                            </div>
+                          ))
+                        }
+                      </div>
+
+                      {/* Кнопка "Показать все" для дочерних категорий */}
+                      {groupedCategories[rootCategory.id].length > 8 && (
+                        <button
+                          className={styles.showAllChildButton}
+                          onClick={() => handleCategoryClick(rootCategory.slug, rootCategory.name)}
+                        >
+                          Показать все
+                        </button>
+                      )}
+                    </div>
+                  )
                 )}
               </div>
             ))}
