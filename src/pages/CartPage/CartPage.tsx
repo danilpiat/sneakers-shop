@@ -1,34 +1,64 @@
 import { useCart } from '../contexts/CartContext';
 import styles from './CartPage.module.css';
-import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react'; // Импортируем useEffect
 
 const CartPage = () => {
   const { state, dispatch } = useCart();
-  const navigate = useNavigate();
 
   const totalAmount = state.items.reduce(
     (total, item) => total + item.price * item.quantity,
     0
   );
 
-  const handleCheckout = () => {
-    navigate('/checkout', {
-      state: {
-        items: state.items.map(item => ({
-          id: item.id,
-          title: item.title,
-          size: item.size,
-          color: item.color,
-          price: item.price,
-          quantity: item.quantity,
-          isPreOrder: item.isPreOrder,
-          stock: item.stock,
-          modelId: item.modelId,
-          productId: item.productId
-        }))
-      }
-    });
+  useEffect(() => {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-expect-error
+    const tg = window.Telegram?.WebApp;
+    if (tg) {
+      tg.ready(); // Сообщаем Telegram, что приложение готово
+      tg.expand(); // Раскрываем приложение на весь экран
+    }
+  }, []);
+
+
+  // Функция отправки данных корзины в Telegram
+  const sendCartDataToTelegram = () => {
+     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-expect-error
+    const tg = window.Telegram?.WebApp;
+
+    if (!tg) {
+      alert('Ошибка: Telegram WebApp не инициализирован');
+      return;
+    }
+
+    // Формируем данные корзины в формате JSON
+    const cartData = {
+      items: state.items.map(item => ({
+        id: item.id,
+        title: item.title,
+        size: item.size,
+        color: item.color,
+        price: item.price,
+        quantity: item.quantity,
+        isPreOrder: item.isPreOrder,
+        modelId: item.modelId,
+        productId: item.productId
+      })),
+      totalAmount: totalAmount,
+      timestamp: Date.now()
+    };
+
+    // Отправляем данные в бота
+    tg.sendData(JSON.stringify(cartData));
+
+    // Очищаем корзину после отправки
     dispatch({ type: 'CLEAR_CART' });
+
+    // Показываем уведомление и закрываем приложение
+    tg.showAlert('Заказ успешно отправлен!', () => {
+      tg.close();
+    });
   };
 
   return (
@@ -106,8 +136,8 @@ const CartPage = () => {
                 Очистить корзину
               </button>
               <button
-                className={styles.checkoutButton}
-                onClick={handleCheckout}
+                 className={styles.telegramButton}
+                onClick={sendCartDataToTelegram}
               >
                 Оформить заказ
               </button>
