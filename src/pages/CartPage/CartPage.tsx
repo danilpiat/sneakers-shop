@@ -1,6 +1,7 @@
 import { useCart } from '../contexts/CartContext';
 import styles from './CartPage.module.css';
 import { useEffect } from 'react'; // Импортируем useEffect
+import { retrieveRawInitData } from '@telegram-apps/sdk';
 
 const CartPage = () => {
   const { state, dispatch } = useCart();
@@ -32,6 +33,8 @@ const CartPage = () => {
       return;
     }
 
+    const initDataRaw = retrieveRawInitData();
+
     // Формируем данные корзины в формате JSON
     const cartData = {
       items: state.items.map(item => ({
@@ -46,7 +49,8 @@ const CartPage = () => {
         productId: item.productId
       })),
       totalAmount: totalAmount,
-      timestamp: Date.now()
+      timestamp: Date.now(),
+      initData: initDataRaw
     };
 
     // Отправляем данные в бота
@@ -55,10 +59,29 @@ const CartPage = () => {
     // Очищаем корзину после отправки
     dispatch({ type: 'CLEAR_CART' });
 
+    const showTelegramAlert = (message: string, callback?: () => void) => {
+      // Проверяем доступность метода
+      if (tg && typeof tg.showPopup === 'function') {
+        tg.showPopup({
+          title: 'Уведомление',
+          message: message,
+          buttons: [{ type: 'ok' }]
+        }, callback);
+      } else if (tg && typeof tg.showAlert === 'function') {
+        // Для версий, поддерживающих showAlert
+        tg.showAlert(message, callback);
+      } else {
+        // Fallback для старых версий
+        alert(message);
+        if (callback) callback();
+      }
+    };
     // Показываем уведомление и закрываем приложение
-    tg.showAlert('Заказ успешно отправлен!', () => {
+    showTelegramAlert('✅ Заказ успешно отправлен!', () => {
+    if (tg) {
       tg.close();
-    });
+    }
+  });
   };
 
   return (
