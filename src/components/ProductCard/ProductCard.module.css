@@ -1,38 +1,32 @@
 .card {
   background: rgba(30, 41, 59, 0.9);
-  border-radius: 12px;
-  padding: 15px;
+  border-radius: 10px; /* Уменьшили скругление */
+  padding: 15px; /* Уменьшили внутренние отступы */
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 2px; /* Уменьшили промежутки между элементами */
   cursor: pointer;
   transition: transform 0.3s, box-shadow 0.3s;
-  height: 100%;
+  height: 95%;
   overflow: hidden;
   border: 1px solid rgba(71, 85, 105, 0.5);
 }
 
 .card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.25);
   border-color: #818cf8;
 }
 
-.image {
-  width: 100%;
-  height: 200px;
-  object-fit: contain;
-  border-radius: 8px;
-  background: #1e293b;
-}
-
+.image,
 .imagePlaceholder {
   width: 100%;
-  height: 200px;
+  height: 130px;
   background: #1e293b;
   display: flex;
   align-items: center;
   justify-content: center;
+  object-fit: contain; /* Сохраняет пропорции */
   border-radius: 8px;
   color: #94a3b8;
 }
@@ -48,14 +42,6 @@
   max-width: 80px;
 }
 
-.brandName {
-  font-size: 14px;
-  color: #94a3b8;
-  font-weight: bold;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
 
 .title {
   font-size: 14px;
@@ -68,40 +54,23 @@
   -webkit-box-orient: vertical;
 }
 
-.sizesContainer {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 5px;
-  margin: 8px 0;
-}
-
-.sizeTag {
-  background: rgba(129, 140, 248, 0.15);
-  color: #cbd5e1;
-  padding: 4px 8px;
-  border-radius: 12px;
-  font-size: 12px;
-  white-space: nowrap;
-}
-
-.moreSizes {
-  color: #64748b;
-  font-size: 12px;
-  align-self: center;
-  margin-left: 4px;
-}
 
 .price {
   font-size: 18px;
   font-weight: bold;
   color: white;
-  margin-top: 10px;
+  margin-top: 2px;
   text-align: center;
 }
 
 /* Добавляем адаптивность для диапазона цен */
 @media (max-width: 480px) {
   .price {
-    font-size: 16px;
+    font-size: 14px; /* Еще меньше на мобильных */
+  }
+
+  .image,
+  .imagePlaceholder {
+    height: 130px; /* Еще компактнее на мобильных */
   }
 }

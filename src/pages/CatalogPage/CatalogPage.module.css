@@ -1,5 +1,5 @@
 .container {
-  padding: 20px;
+  padding: 15px;
   max-width: 1200px;
   background-color: rgba(15, 23, 42, 0.85);
   border-radius: 12px;
@@ -9,10 +9,10 @@
 .title {
   text-align: center;
   color: #f8fafc;
-  margin-bottom: 30px;
+  margin-bottom: 20px;
   font-size: 28px;
   position: relative;
-  padding-bottom: 15px;
+  padding-bottom: 10px;
 }
 
 .title::after {
@@ -37,9 +37,9 @@
 .productsGrid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 25px;
-  margin-bottom: 40px;
-  min-width: 550px; /* Минимальная ширина для двух карточек + отступы */
+  gap: 15px 25px; /* 15px вертикальные отступы, 25px горизонтальные */
+  margin-bottom: 30px; /* Уменьшили нижний отступ */
+  row-gap: 15px; /* Явно задаем отступ между рядами */
 }
 
 .loading {
@@ -75,20 +75,7 @@
   }
 }
 
-@media (max-width: 480px) {
-  .productsGrid {
-    grid-template-columns: repeat(2, 1fr); /* Все равно 2 колонки */
-    gap: 15px; /* Уменьшаем отступы */
-  }
-}
 
-/* Дополнительный медиа-запрос для очень маленьких экранов */
-@media (max-width: 360px) {
-  .productsGrid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
-  }
-}
 .header {
   display: flex;
   flex-direction: column;
@@ -153,5 +140,27 @@
   .searchContainer {
     max-width: 100%;
     align-self: stretch;
+  }
+}
+@media (max-width: 480px) {
+  .productsGrid {
+    gap: 1px 15px; /* Еще меньше на мобильных */
+    row-gap: 1px;
+  }
+  .title {
+    margin-bottom: 15px;
+  }
+
+  .controls {
+    gap: 15px; /* Уменьшаем отступы между элементами управления */
+    margin-bottom: 20px;
+  }
+}
+
+/* Дополнительный медиа-запрос для очень маленьких экранов */
+@media (max-width: 360px) {
+  .productsGrid {
+    gap: 8px 12px;
+    row-gap: 8px;
   }
 }
