@@ -10,7 +10,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   border-bottom: 1px solid #475569;
   padding-bottom: 15px;
 }
@@ -36,7 +36,7 @@
 }
 
 .filterGroup {
-  margin-bottom: 25px;
+  margin-bottom: 5px;
 }
 
 .filterHeader {

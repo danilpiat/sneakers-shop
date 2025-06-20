@@ -140,7 +140,7 @@ const FilterPanel: React.FC<FilterPanelProps> = ({
             onChange={handleInStockChange}
             className={styles.toggleInput}
           />
-          <span className={styles.toggleLabel}>В наличии</span>
+          <span className={styles.toggleLabel}> В наличии</span>
         </label>
       </div>
     </div>
