@@ -56,12 +56,12 @@
 }
 
 .brandName {
-  font-size: 18px;
+  font-size: 16px;
   margin: 0 0 5px 0;
 }
 
 .productTitle {
-   font-size: 28px;
+   font-size: 22px;
   margin: 0;
 }
 
@@ -119,13 +119,13 @@
 
 .sizeGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
-  gap: 10px;
+  grid-template-columns: repeat(auto-fill, minmax(60px, 1fr)); /* Уменьшили минимальную ширину */
+  gap: 8px; /* Уменьшили промежуток между плашками */
 }
 
 .sizeButton {
-  min-height: 65px; /* Еще немного уменьшили высоту */
-  padding: 6px 3px;
+  min-height: 50px; /* Значительно уменьшили высоту */
+  padding: 4px 2px; /* Уменьшили внутренние отступы */
   position: relative;
   border: 1px solid #ddd;
   border-radius: 4px;
@@ -135,7 +135,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  color: black
+  justify-content: center;
+  color: black;
 }
 
 .sizeButton:hover {
@@ -150,7 +151,7 @@
 
 .sizeValue {
   font-weight: bold;
-  font-size: 15px;
+  font-size: 13px; /* Уменьшили размер шрифта */
 }
 
 .sizeButton.outOfStock {
@@ -188,11 +189,11 @@
   left: 0;
   right: 0;
   background: white;
-  padding: 15px 20px;
+  padding: 12px 15px; /* Уменьшили отступы */
   display: flex;
   justify-content: space-between;
   align-items: center;
-  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1); /* Слегка уменьшили тень */
   z-index: 100;
 }
 
@@ -207,23 +208,14 @@
 }
 
 .priceValue {
-  font-size: 22px;
+  font-size: 19px; /* Уменьшили размер шрифта цены */
   font-weight: bold;
   color: #000;
 }
 
 .addToCart {
-  padding: 15px 30px;
-  background: #000;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  font-size: 16px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: background 0.2s;
-  flex-grow: 1;
-  max-width: 200px;
+  padding: 12px 20px; /* Уменьшили отступы кнопки */
+  font-size: 15px; /* Уменьшили размер шрифта */
 }
 
 .addToCart:hover {
@@ -257,9 +249,7 @@
     font-size: 24px;
   }
 
-  .sizeGrid {
-    grid-template-columns: repeat(3, 1fr);
-  }
+
 }
 
 @media (max-width: 480px) {
@@ -271,39 +261,36 @@
     font-size: 22px;
   }
 
-  .bottomPanel {
-    flex-direction: column;
-    gap: 10px;
-    padding: 15px;
-  }
 
   .priceContainer {
     width: 100%;
     text-align: center;
   }
 
-  .addToCart {
-    width: 100%;
-    max-width: none;
-  }
 
   .container {
-    padding-bottom: 150px; /* Больший отступ для мобильных */
+    padding-bottom: 140px; /* Немного уменьшили отступ */
+  }
+
+  .bottomPanel {
+    padding: 10px 12px; /* Уменьшили отступы на мобильных */
+  }
+
+  .priceValue {
+    font-size: 18px; /* Размер для мобильных */
+  }
+
+  .addToCart {
+    padding: 10px 15px;
+    font-size: 14px;
   }
 }
 
-  .sizeButton {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 10px 5px;
-  }
 
   .sizePrice {
-    font-size: 11px;
+    font-size: 10px; /* Уменьшили размер шрифта цены */
     color: #666;
-    margin: 3px 0;
+    margin: 2px 0; /* Уменьшили отступы */
   }
 
   .inStockBadge {
@@ -319,10 +306,10 @@
   }
 
   .stockBadge {
-    font-size: 9px;
-    padding: 1px 3px;
-    border-radius: 3px;
-    margin-top: 3px;
+    font-size: 8px; /* Уменьшили размер бейджа */
+    padding: 1px 2px; /* Уменьшили отступы в бейдже */
+    border-radius: 2px;
+    margin-top: 2px;
     width: 100%;
     text-align: center;
   }

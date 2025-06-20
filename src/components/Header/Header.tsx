@@ -26,7 +26,7 @@ const Header = () => {
       {/* Первая строка - название магазина */}
       <div className={styles.topRow}>
         <Link to="/" className={styles.storeName}>
-          «SNEAKER CULTURE STORE»
+          SNEAKER CULTURE STORE
         </Link>
       </div>
 
