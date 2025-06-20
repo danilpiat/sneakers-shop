@@ -144,18 +144,18 @@
   }
 
   .rootCategoryTitle {
-    font-size: 20px;
+    font-size: 16px;
   }
 
   .title {
-    font-size: 24px;
+    font-size: 16px;
   }
 }
 .rootCategoryHeader {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
+  margin-bottom: 16px;
   padding-bottom: 10px;
   border-bottom: 1px solid #475569;
 }
@@ -251,10 +251,10 @@
   }
 
   .rootCategoryTitle {
-    font-size: 20px;
+    font-size: 16px;
   }
 
   .title {
-    font-size: 24px;
+    font-size: 18px;
   }
 }
