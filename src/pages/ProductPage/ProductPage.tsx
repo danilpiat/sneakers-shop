@@ -215,7 +215,9 @@ const ProductPage = () => {
                 onClick={() => setSelectedSize(sizeItem)}
               >
                 <div className={styles.sizeValue}>{sizeItem.size}</div>
-                <div className={styles.sizePrice}>{sizeItem.price.toLocaleString()} ₽</div>
+                <div className={styles.sizePrice}>
+                  {parseInt(String(sizeItem.price), 10).toLocaleString()} ₽
+                </div>
 
                 {/* Статус наличия */}
                 <div className={`${styles.stockBadge} ${
@@ -242,9 +244,9 @@ const ProductPage = () => {
           <span className={styles.priceLabel}>Цена:</span>
           <span className={styles.priceValue}>
             {selectedSize
-              ? `${selectedSize.price.toLocaleString()} ₽`
+              ? `${parseInt(String(selectedSize.price), 10).toLocaleString()} ₽`
               : selectedModel
-                ? `от ${selectedModel.min_price.toLocaleString()} ₽`
+                ? `от ${parseInt(String(selectedModel.min_price), 10).toLocaleString()} ₽`
                 : 'Цена не указана'}
           </span>
         </div>
