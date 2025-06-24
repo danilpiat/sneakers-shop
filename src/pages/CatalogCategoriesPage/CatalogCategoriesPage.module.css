@@ -6,7 +6,7 @@
 
 .content {
   padding: 20px;
-  background: rgba(30, 41, 59, 0.9);
+  background: rgba(52, 56, 62, 0.9);
   border-radius: 12px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
 }
@@ -39,7 +39,7 @@
 }
 
 .rootCategory {
-  background: rgba(15, 23, 42, 0.85);
+  background: rgba(33, 35, 38, 0.9);
   border-radius: 12px;
   padding: 20px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
@@ -85,7 +85,7 @@
 .categoryPlaceholder {
   width: 100%;
   height: 180px;
-  background: #1e293b;
+  background: rgba(34, 33, 40, 0.9);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -100,7 +100,7 @@
   text-align: center;
   color: #f8fafc;
   font-size: 14px;
-  background: rgba(15, 23, 42, 0.7);
+  background: rgba(52, 56, 62, 0.9);
   flex-grow: 1;
   display: flex;
   align-items: center;
@@ -157,7 +157,6 @@
   align-items: center;
   margin-bottom: 16px;
   padding-bottom: 10px;
-  border-bottom: 1px solid #475569;
 }
 
 .rootCategoryTitle {
@@ -173,7 +172,7 @@
 }
 
 .showAllButton {
-  background: #818cf8;
+  background: rgba(52, 56, 62, 0.9);
   color: white;
   border: none;
   border-radius: 20px;

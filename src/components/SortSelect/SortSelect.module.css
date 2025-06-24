@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: column;
   gap: 8px;
-  background: rgba(30, 41, 59, 0.9);
+  background: rgba(52, 56, 62, 0.9);
   padding: 15px;
   border-radius: 12px;
   height: min-content;
@@ -15,7 +15,7 @@
 }
 
 .select {
-  background: #1e293b;
+  background: rgba(33, 35, 38, 0.9);
   color: #f8fafc;
   border: 1px solid #475569;
   border-radius: 6px;

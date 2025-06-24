@@ -1,7 +1,6 @@
 .container {
   padding: 15px;
   max-width: 1200px;
-  background-color: rgba(15, 23, 42, 0.85);
   border-radius: 12px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
 }
@@ -9,23 +8,15 @@
 .title {
   text-align: center;
   color: #f8fafc;
-  margin-bottom: 10px;
-  font-size: 28px;
+  margin-bottom: 30px;
+  font-size: 22px;
   position: relative;
-  padding-bottom: 10px;
+  padding-bottom: 0px;
+  white-space: pre; /* Запрещает перенос текста на новую строку */
+  overflow: hidden; /* Скрывает текст, который выходит за границы */
+  text-overflow: ellipsis; /* Добавляет многоточие (...) если текст обрезается */
 }
 
-.title::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 100px;
-  height: 3px;
-  background: #818cf8;
-  border-radius: 3px;
-}
 
 .controls {
   display: flex;
@@ -45,7 +36,7 @@
 .loading {
   text-align: center;
   padding: 40px;
-  color: #818cf8;
+  color: rgba(52, 56, 62, 0.9);
   font-size: 18px;
 }
 
@@ -95,11 +86,15 @@
   padding-right: 40px; /* Для кнопки очистки */
   border: 1px solid #475569;
   border-radius: 30px;
-  background: rgba(15, 23, 42, 0.7);
+  background-color: rgba(33, 35, 38, 0.9);
   color: #f8fafc;
   font-size: 16px;
   transition: all 0.3s ease;
   margin-bottom: 10px;
+}
+.searchInput::placeholder {
+  color: #ffffff;
+  opacity: 1;
 }
 
 .searchInput:focus {
@@ -149,7 +144,7 @@
     row-gap: 1px;
   }
   .title {
-    margin-bottom: 10px;
+    margin-bottom: 0;
   }
 
   .controls {

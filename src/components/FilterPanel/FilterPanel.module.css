@@ -1,5 +1,5 @@
 .panel {
-  background: rgba(30, 41, 59, 0.9);
+  background: rgba(52, 56, 62, 0.9);
   padding: 20px;
   border-radius: 12px;
   flex: 1;
@@ -23,8 +23,8 @@
 
 .resetButton {
   background: none;
-  border: 1px solid #818cf8;
-  color: #818cf8;
+  border: #f8fafc;
+  color: #f8fafc;
   padding: 6px 12px;
   border-radius: 6px;
   cursor: pointer;
@@ -79,7 +79,7 @@
 }
 
 .dropdownContent::-webkit-scrollbar-track {
-  background: #1e293b;
+  background: rgba(52, 56, 62, 0.9);
   border-radius: 3px;
 }
 

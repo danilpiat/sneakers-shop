@@ -200,7 +200,7 @@ const CatalogPage = () => {
   return (
     <div className={styles.container}>
       <h1 className={styles.title}>
-        {decodedCategoryName ? `Категория: ${decodedCategoryName}` : ''}
+        {decodedCategoryName ? `Категория: \n ${decodedCategoryName}` : ''}
       </h1>
 
       <div className={styles.searchContainer}>

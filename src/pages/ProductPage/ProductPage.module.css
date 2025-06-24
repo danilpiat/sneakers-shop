@@ -4,7 +4,7 @@
   padding: 20px;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 5px;
   padding-bottom: 120px; /* Увеличили отступ для нижней панели */
   color: white; /* Основной цвет текста - белый */
 }
@@ -52,7 +52,7 @@
 
 .productHeader {
   text-align: center;
-  padding: 10px 0;
+  padding-top: 10px;
 }
 
 .brandName {
@@ -61,7 +61,7 @@
 }
 
 .productTitle {
-   font-size: 22px;
+   font-size: 19px;
   margin: 0;
 }
 
@@ -107,7 +107,7 @@
 }
 
 .sizeSection {
-  margin-top: 10px;
+  margin-top: 0;
   color: white;
 }
 
@@ -258,7 +258,7 @@
   }
 
   .productTitle {
-    font-size: 22px;
+    font-size: 19px;
   }
 
 

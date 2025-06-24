@@ -18,12 +18,11 @@ html {
 }
 
 body {
-  background-image: url('IMG_5453 (2).JPG');
+  background-image: url('IMG_9991.PNG');
   background-size: cover;
   background-attachment: fixed;
   background-position: center;
   background-repeat: no-repeat;
-  background-color: rgba(0, 0, 0, 1);
   background-blend-mode: multiply;
   color: var(--text-primary);
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell;
@@ -68,7 +67,7 @@ button {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  gap: 20px;
+  gap: 5px;
 }
 
 .container {
@@ -76,7 +75,7 @@ button {
   margin: 0 auto;
   width: 100%;
   padding: 20px;
-  background: rgba(15, 23, 42, 0.85);
+  background: rgba(52, 56, 62, 0.9);
   border-radius: 12px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
