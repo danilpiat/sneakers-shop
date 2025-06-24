@@ -1,7 +1,7 @@
 .header {
   display: flex;
   flex-direction: column;
-  padding: 10px 20px;
+  padding: 0 15px;
   background: rgba(15, 23, 42, 0.9);
   border-radius: 12px;
   margin-bottom: 0px;
@@ -20,7 +20,7 @@
 
 /* Стили для верхней строки */
 .topRow {
-  padding-top: 10px;
+  padding-top: 5px;
 }
 
 .storeName {
@@ -34,7 +34,7 @@
 /* Стили для средней строки */
 .middleRow {
   gap: 20px;
-  padding: 10px 0;
+  padding: 2px 0;
 }
 
 .infoButton {
