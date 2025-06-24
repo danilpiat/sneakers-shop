@@ -46,7 +46,7 @@
 
 .title {
   font-size: 14px;
-  margin-bottom: 25px;
+  margin-bottom: 30px;
   color: #f8fafc;
   flex-grow: 0; /* Изменено */
   overflow: hidden;
