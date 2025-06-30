@@ -21,28 +21,31 @@ body {
   background-color: var(--bg-primary);
   color: var(--text-primary);
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell;
-  position: relative; /* Добавляем для корректного позиционирования псевдоэлемента */
+  position: relative;
   min-height: 100vh;
+  overflow-x: hidden; /* Добавим, если есть горизонтальная прокрутка */
 }
 
 body::before {
   content: "";
-  position: fixed; /* Фиксируем фон относительно окна */
+  position: fixed;
   top: 0;
   left: 0;
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
   background-image: url('IMG_9991.PNG');
   background-size: cover;
-  background-position: center;
+  background-position: center center;
   background-repeat: no-repeat;
-  z-index: -1; /* Помещаем под основной контент */
+  z-index: -1;
 
-  /* Оптимизация качества изображения */
-  image-rendering: crisp-edges;
-  backface-visibility: hidden;
+  /* Улучшение качества изображения */
+  image-rendering: auto; /* crisp-edges может размывать изображения */
+  filter: blur(0); /* Убедимся, что нет размытия */
+  will-change: transform;
   transform: translateZ(0);
 }
+
 
 #root {
   display: flex;
@@ -79,12 +82,5 @@ button {
 }
 
 .container {
-  max-width: 1200px;
-  margin: 20px auto;
-  width: 100%;
-  padding: 20px;
-  background: rgba(30, 41, 59, 0.85); /* Увеличиваем прозрачность для лучшей читаемости */
-  border-radius: var(--border-radius);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-  backdrop-filter: blur(2px); /* Легкое размытие для улучшения контраста */
+  min-height: calc(100vh - 100px); /* например, если есть хедер/футер */
 }
