@@ -67,14 +67,14 @@ button {
 }
 
 .container {
-  min-height: calc(100vh - 100px); /* например, если есть хедер/футер */
+   min-height: auto;
 }
 .background-image {
-  position: absolute; /* было fixed */
+  position: absolute;
   top: 0;
   left: 0;
   width: 100%;
-  height: 100%;
+  height: 1000px; /* пример: фиксированное значение больше ожидаемой высоты */
   background-image: url('IMG_9991.PNG');
   background-size: cover;
   background-position: center;
