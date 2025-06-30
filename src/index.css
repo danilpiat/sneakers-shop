@@ -30,7 +30,6 @@ body {
 
 html, body {
   height: 100%;
-  overflow: hidden; /* чтобы клавиатура не вызывала пересчёт layout */
 }
 
 #root {
