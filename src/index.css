@@ -28,12 +28,16 @@ body {
 
 
 
+html, body {
+  height: 100%;
+  overflow: hidden; /* чтобы клавиатура не вызывала пересчёт layout */
+}
+
 #root {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-  position: relative; /* ДОБАВЬ ЭТО */
-  z-index: 1;          /* И ЭТО */
+  position: relative;
+  z-index: 1;
+  height: 100%;
+  overflow: auto;
 }
 
 
@@ -68,16 +72,15 @@ button {
   min-height: calc(100vh - 100px); /* например, если есть хедер/футер */
 }
 .background-image {
-  position: fixed;
+  position: absolute; /* было fixed */
   top: 0;
   left: 0;
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
   background-image: url('IMG_9991.PNG');
   background-size: cover;
-  background-position: center center;
+  background-position: center;
   background-repeat: no-repeat;
   z-index: -100;
   pointer-events: none;
-  will-change: transform;
 }
