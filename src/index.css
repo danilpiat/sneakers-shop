@@ -22,14 +22,9 @@ body {
   background-size: cover; /* Растягивает изображение, сохраняя пропорции */
   background-attachment: fixed; /* Фиксирует фон при скролле */
   background-position: center; /* Центрирует изображение */
-  background-repeat: no-repeat; /* Отключает повторение */
   background-color: var(--bg-primary); /* Фон на случай, если изображение не загрузится */
   color: var(--text-primary);
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell;
-  line-height: 1.6;
-  min-height: 100vh;
-  margin: 0; /* Убираем отступы по умолчанию */
-  padding: 0; /* Убираем padding, чтобы фон был на весь экран */
 }
 
 #root {
