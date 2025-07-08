@@ -1,0 +1,41 @@
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.section {
+  margin-bottom: 2.5rem;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 2rem;
+  color: #f8fafc;
+}
+
+h2 {
+  text-align: center;
+  color: #f8fafc;
+  border-bottom: 2px solid #f0f0f0;
+  padding-bottom: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+h3 {
+  color: #f8fafc;
+  margin: 1.2rem 0 0.8rem;
+}
+
+.list {
+  padding-left: 1.5rem;
+  list-style-type: none;
+}
+
+.list li {
+  margin-bottom: 1.2rem;
+  padding-left: 1rem;
+  border-left: 3px solid #f8fafc;
+}

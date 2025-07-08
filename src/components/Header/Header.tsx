@@ -33,7 +33,7 @@ const Header = () => {
       {/* Вторая строка - кнопки оплаты и контактов */}
       <div className={styles.middleRow}>
         <button className={styles.infoButton} onClick={goToPayment}>
-          Оплата
+          Доставка и Оплата
         </button>
         <button className={styles.infoButton} onClick={goToContacts}>
           Контакты

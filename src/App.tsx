@@ -6,6 +6,8 @@ import ProductPage from './pages/ProductPage/ProductPage';
 import CartPage from './pages/CartPage/CartPage'; // Новый компонент
 import { CartProvider } from './pages/contexts/CartContext'; // Импорт провайдера
 import CheckoutPage from './pages/CheckoutPage/CheckoutPage';
+import PaymentPage from './pages/PaymentPage/PaymentPage';
+import ContactsPage from './pages/ContactsPage/ContactsPage';
 
 function App() {
   return (
@@ -20,6 +22,8 @@ function App() {
         <Route path="/product/:id" element={<ProductPage/>}/>
         <Route path="/cart" element={<CartPage/>}/> {/* Обновленный роут */}
         <Route path="/checkout" element={<CheckoutPage/>}/>
+        <Route path="/payment" element={<PaymentPage/>}/>
+        <Route path="/contacts" element={<ContactsPage/>}/>
       </Routes>
     </div>
   </CartProvider>
